@@ -1,0 +1,13 @@
+# to create from scratch: conda env create -f environment.yml
+# to update the environment: conda env update --name myenv --file environment.yml --prune
+# or update with environment activated: conda env update --file environment.yml --prune
+
+name: sp4e_week4
+channels:
+    - conda-forge
+dependencies:
+   - python=3.9
+   - pip:
+     - scipy==1.9.2
+     - matplotlib==3.6.1
+   - git
