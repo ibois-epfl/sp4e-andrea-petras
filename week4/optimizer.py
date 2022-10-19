@@ -70,7 +70,7 @@ def plot_3d_BFGS()-> None:
     # show the plot
     plt.show()
 
-def plot_3d_LGMRES()-> None:
+def plot_3d_LGMRES(iters: list)-> None:
     """
     Plot the quadratic function with the minimum found by the optimizer LGMRES and its iterations.
 
@@ -93,13 +93,13 @@ def plot_3d_LGMRES()-> None:
     ax.set_ylabel('y')
     ax.set_zlabel('z')
 
-    # print all the points in xk_list
-    for i in range(len(xk_list)):
-        ax.scatter(xk_list[i][0], xk_list[i][1], 2*quadratic_function(xk_list[i]), color='red')
+    # print all the points in iterations
+    for i in range(len(iters)):
+        ax.scatter(iters[i][0], iters[i][1], 2*quadratic_function(iters[i]), color='red')
 
     # draw the lines between the points
-    for i in range(len(xk_list)-1):
-        ax.plot([xk_list[i][0], xk_list[i+1][0]], [xk_list[i][1], xk_list[i+1][1]], [2*quadratic_function(xk_list[i][0]), 2*quadratic_function(xk_list[i+1][0])], color='green')
+    for i in range(len(iters)-1):
+        ax.plot([iters[i][0], iters[i+1][0]], [iters[i][1], iters[i+1][1]], [2*quadratic_function(iters[i][0]), 2*quadratic_function(iters[i+1][0])], color='green')
 
     # show the plot
     plt.show()
@@ -114,13 +114,13 @@ def callback_storer(xk: np.ndarray)-> None:
     """
     xk_list.append(xk)
 
-def optimizator(opt_type: str, x0:float = 10, s: Callable = quadratic_function, isPlotted: bool = True)-> float:
+def optimizator(opt_type: str, x0:float = 10, func: Callable = quadratic_function, isPlotted: bool = True)-> float:
     """
     Find the minimum of the quadratic function.
 
         :param opt_type: str The type of the optimizer to use. It can be "BFGS" or "LGMRES"
         :param x0: float The initial guess
-        :param s: Callable functor of the quadratic function
+        :param func: Callable functor of the quadratic function
         :param isPlotted: bool True if the the optimization process is plotted
 
         :return: float The minimum of the quadratic function
@@ -136,7 +136,7 @@ def optimizator(opt_type: str, x0:float = 10, s: Callable = quadratic_function, 
         xk_list.append(x0)
 
         # run minimizer BFGS
-        res = minimize(s, 
+        res = minimize(func, 
                         x0, 
                         method= 'BFGS', 
                         callback=callback_storer,
@@ -167,7 +167,7 @@ def optimizator(opt_type: str, x0:float = 10, s: Callable = quadratic_function, 
 
         # plot it
         if isPlotted:
-            plot_3d_LGMRES()
+            plot_3d_LGMRES(xk_list)
 
     else:
         raise ValueError("Invalid opt_type")
