@@ -5,7 +5,7 @@ from typing import Callable
 import numpy as np
 
 
-def plot_3d_quadratic_function()-> None:
+def plot_3d_BFGS()-> None:
     """
     Plot the quadratic function with the minimum found by the optimizer and its iterations.
 
@@ -38,6 +38,49 @@ def plot_3d_quadratic_function()-> None:
     # add lines between the points
     for i in range(len(xk_list)-1):
         ax.plot([xk_list[i], xk_list[i+1]], [xk_list[i], xk_list[i+1]], [2*quadratic_function(xk_list[i]), 2*quadratic_function(xk_list[i+1])], color='green')
+
+    # show the plot
+    plt.show()
+
+def plot_3d_LGMRES()-> None:
+    """
+    Plot the quadratic function with the minimum found by the optimizer and its iterations.
+
+        :return: None
+    """
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+
+    # create the grid
+    X = np.arange(-10, 10, 0.25)
+    Y = np.arange(-10, 10, 0.25)
+    X, Y = np.meshgrid(X, Y)
+
+    Z = quadratic_function(X) + quadratic_function(Y)
+
+    # create the figure as transparent and in axonometric view
+    fig = plt.figure(figsize=(5, 5), dpi=100, facecolor='w', edgecolor='k')
+
+    # add a transparent add_subplot
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(X, Y, Z, color="blue", edgecolor='none', alpha=.4)
+    ax.view_init(30, -45)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+
+    # print all the points in xk_list
+    for i in range(len(xk_list)):
+        ax.scatter(xk_list[i][0], xk_list[i][1], 2*quadratic_function(xk_list[i]), color='red')
+
+    # draw the lines between the points
+    
+
+    # # add lines between the points
+
+    for i in range(len(xk_list)-1):
+        ax.plot([xk_list[i][0], xk_list[i+1][0]], [xk_list[i][1], xk_list[i+1][1]], [2*quadratic_function(xk_list[i][0]), 2*quadratic_function(xk_list[i+1][0])], color='green')
+
 
     # show the plot
     plt.show()
@@ -77,44 +120,86 @@ def callback_storer(xk: float)-> None:
     
         :return: None
         """
+    print("xk: ", xk)
     xk_list.append(xk)
 
-def optimizer(s: Callable = quadratic_function, x0:float = 0, isPlotted: bool = true)-> float:
+def optimizer(opt_type: str, x0:float = 10, s: Callable = quadratic_function, isPlotted: bool = True)-> float:
     """
-    Find the minimum of the quadratic function using the scipy.optimize.minimize function
+    Find the minimum of the quadratic function.
 
-        :param s: Callable functor of the  quadratic function
+        :param opt_type: str The type of the optimizer to use. It can be "BFGS" or "LGMRES"
         :param x0: float The initial guess
+        :param s: Callable functor of the quadratic function
         :param isPlotted: bool True if the the optimization process is plotted
 
         :return: float The minimum of the quadratic function
-    """"
+    """
     from scipy.optimize import minimize
-
-    # first guess
-    x0 = 0
+    from scipy.sparse.linalg import lgmres
 
     # clear out the storer for iterations
     xk_list.clear()
 
+    # optimize with the scipy.scparse.linalg.lgmres
+
+
     # run otpimization
-    res = minimize(s, 
-                   x0, 
-                   method= 'BFGS', 
-                   callback=callback_storer,
-                   options={'disp': True})
+    if opt_type == "BFGS":
+        res = minimize(s, 
+                        x0, 
+                        method= 'BFGS', 
+                        callback=callback_storer,
+                        options={'disp': False})
+
+        if isPlotted:
+            plot_3d_BFGS()
+
+    elif opt_type == "LGMRES":
+        from scipy.sparse import csc_matrix
+
+        
+        A = csc_matrix([[8, 1], [1, 3]], dtype=float)
+        b = np.array([2, 4], dtype=float)
+
+        x0 = np.array([x0, x0], dtype=float)
+        xk_list.append(x0)
+
+        # append the first guess to the list
+        
+
+        # run the optimization
+        res, info = lgmres(A, b, x0, callback=callback_storer)
+
+
+        print(f"Length list iterations: {len(xk_list)}")
+        print(f"Iterations: {xk_list}")
+
+        print(res)
+
+        print(info)
+
+        if isPlotted:
+            plot_3d_LGMRES()
+
+
+
+        
+    else:
+        raise ValueError("Invalid opt_type")
+
 
     # plot the solution
-    plot_3d_quadratic_function()
 
 
 def main()-> int:
 
     global xk_list
+
     xk_list = []
 
-    # exercice 1.a
-    optimizer()
+    optimizer(opt_type="BFGS")
+    optimizer(opt_type="LGMRES")
+
 
     return 0;
 
