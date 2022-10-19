@@ -3,17 +3,44 @@
 from typing import Callable
 
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
+
+def quadratic_function(x: float,
+                        A: np.ndarray = np.array([[8, 1], [1, 3]]),
+                        b: np.ndarray = np.array([2, 4]))-> float:
+    """
+    It returns the value of the quadratic function at x.
+    By implementing the expression S(x) = (1/2)*(x^T)*A*x - (x^T)*b
+    where A = [[8, 1], [1, 3]] and b = [2, 4] and A*x = b
+
+        :param x: float The value of x in the quadratic function
+        :param A: np.ndarray The matrix A
+        :param b: np.ndarray The vector b
+
+        :return: float The value of the quadratic function at x
+    """
+    # A*x
+    A_x = [A[0][0] * x + A[0][1] * x, A[1][0] * x + A[1][1] * x]
+    
+    # (1/2)*(x^T)*A*x
+    term1 = (1/2) * (x * A[0][0] * x + x * A[0][1] * x + x * A[1][0] * x + x * A[1][1] * x)
+    
+    # -(x^T)*b
+    term2 = -(x * b[0] + x * b[1])
+
+    # final expression for the quadratic function
+    S = term1 + term2
+
+    return S
 
 def plot_3d_BFGS()-> None:
     """
-    Plot the quadratic function with the minimum found by the optimizer and its iterations.
+    Plot the quadratic function with the minimum found by the optimizer BFGS and its iterations.
 
         :return: None
     """
-    import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
-
     # create the grid
     X = np.arange(-10, 10, 0.25)
     Y = np.arange(-10, 10, 0.25)
@@ -44,18 +71,14 @@ def plot_3d_BFGS()-> None:
 
 def plot_3d_LGMRES()-> None:
     """
-    Plot the quadratic function with the minimum found by the optimizer and its iterations.
+    Plot the quadratic function with the minimum found by the optimizer LGMRES and its iterations.
 
         :return: None
     """
-    import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
-
     # create the grid
     X = np.arange(-10, 10, 0.25)
     Y = np.arange(-10, 10, 0.25)
     X, Y = np.meshgrid(X, Y)
-
     Z = quadratic_function(X) + quadratic_function(Y)
 
     # create the figure as transparent and in axonometric view
@@ -80,44 +103,17 @@ def plot_3d_LGMRES()-> None:
     # show the plot
     plt.show()
 
-def quadratic_function(x: float)-> float:
-    """
-    It returns the value of the quadratic function at x.
-    By implementing the expression S(x) = (1/2)*(x^T)*A*x - (x^T)*b
-    where A = [[8, 1], [1, 3]] and b = [2, 4] and A*x = b
-
-        :param x: float The value of x in the quadratic function
-
-        :return: float The value of the quadratic function at x
-    """
-    A = [[8, 1], [1, 3]]
-    b = [2, 4]
-    
-    # A*x
-    A_x = [A[0][0] * x + A[0][1] * x, A[1][0] * x + A[1][1] * x]
-    
-    # (1/2)*(x^T)*A*x
-    term1 = (1/2) * (x * A[0][0] * x + x * A[0][1] * x + x * A[1][0] * x + x * A[1][1] * x)
-    
-    # -(x^T)*b
-    term2 = -(x * b[0] + x * b[1])
-
-    # final expression for the quadratic function
-    S = term1 + term2
-
-    return S
-
-def callback_storer(xk: float)-> None:
+def callback_storer(xk: np.ndarray)-> None:
     """
     Store the value of xk in the list xk_list
     
         :param xk: float The value of xk
     
         :return: None
-        """
+    """
     xk_list.append(xk)
 
-def optimizer(opt_type: str, x0:float = 10, s: Callable = quadratic_function, isPlotted: bool = True)-> float:
+def optimizator(opt_type: str, x0:float = 10, s: Callable = quadratic_function, isPlotted: bool = True)-> float:
     """
     Find the minimum of the quadratic function.
 
@@ -130,20 +126,22 @@ def optimizer(opt_type: str, x0:float = 10, s: Callable = quadratic_function, is
     """
     # clear out the storer for iterations
     xk_list.clear()
-    
 
     # run otpimization
     if opt_type == "BFGS":
         from scipy.optimize import minimize
 
+        # add the first guess
         xk_list.append(x0)
 
+        # run minimizer BFGS
         res = minimize(s, 
                         x0, 
                         method= 'BFGS', 
                         callback=callback_storer,
                         options={'disp': False})
 
+        # plot it
         if isPlotted:
             plot_3d_BFGS()
 
@@ -162,20 +160,16 @@ def optimizer(opt_type: str, x0:float = 10, s: Callable = quadratic_function, is
         # run the optimization
         res, info = lgmres(A, b, x0, callback=callback_storer)
 
+        # check for successful convergence
         if info > 0:
             raise Exception("The algorithm did not converge.")
 
+        # plot it
         if isPlotted:
             plot_3d_LGMRES()
 
-
-
-        
     else:
         raise ValueError("Invalid opt_type")
-
-
-    # plot the solution
 
 
 def main()-> int:
@@ -184,9 +178,8 @@ def main()-> int:
 
     xk_list = []
 
-    optimizer(opt_type="BFGS")
-    optimizer(opt_type="LGMRES")
-
+    optimizator(opt_type="BFGS")
+    optimizator(opt_type="LGMRES")
 
     return 0;
 
