@@ -74,13 +74,8 @@ def plot_3d_LGMRES()-> None:
         ax.scatter(xk_list[i][0], xk_list[i][1], 2*quadratic_function(xk_list[i]), color='red')
 
     # draw the lines between the points
-    
-
-    # # add lines between the points
-
     for i in range(len(xk_list)-1):
         ax.plot([xk_list[i][0], xk_list[i+1][0]], [xk_list[i][1], xk_list[i+1][1]], [2*quadratic_function(xk_list[i][0]), 2*quadratic_function(xk_list[i+1][0])], color='green')
-
 
     # show the plot
     plt.show()
@@ -120,7 +115,6 @@ def callback_storer(xk: float)-> None:
     
         :return: None
         """
-    print("xk: ", xk)
     xk_list.append(xk)
 
 def optimizer(opt_type: str, x0:float = 10, s: Callable = quadratic_function, isPlotted: bool = True)-> float:
@@ -134,17 +128,16 @@ def optimizer(opt_type: str, x0:float = 10, s: Callable = quadratic_function, is
 
         :return: float The minimum of the quadratic function
     """
-    from scipy.optimize import minimize
-    from scipy.sparse.linalg import lgmres
-
     # clear out the storer for iterations
     xk_list.clear()
-
-    # optimize with the scipy.scparse.linalg.lgmres
-
+    
 
     # run otpimization
     if opt_type == "BFGS":
+        from scipy.optimize import minimize
+
+        xk_list.append(x0)
+
         res = minimize(s, 
                         x0, 
                         method= 'BFGS', 
@@ -155,28 +148,22 @@ def optimizer(opt_type: str, x0:float = 10, s: Callable = quadratic_function, is
             plot_3d_BFGS()
 
     elif opt_type == "LGMRES":
+        from scipy.sparse.linalg import lgmres
         from scipy.sparse import csc_matrix
 
-        
+        # parse matrix A for scipy
         A = csc_matrix([[8, 1], [1, 3]], dtype=float)
         b = np.array([2, 4], dtype=float)
 
+        # format initial guess
         x0 = np.array([x0, x0], dtype=float)
         xk_list.append(x0)
-
-        # append the first guess to the list
-        
 
         # run the optimization
         res, info = lgmres(A, b, x0, callback=callback_storer)
 
-
-        print(f"Length list iterations: {len(xk_list)}")
-        print(f"Iterations: {xk_list}")
-
-        print(res)
-
-        print(info)
+        if info > 0:
+            raise Exception("The algorithm did not converge.")
 
         if isPlotted:
             plot_3d_LGMRES()
