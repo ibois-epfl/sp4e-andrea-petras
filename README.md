@@ -12,7 +12,7 @@ Repo for sp4e course's homework for [Andrea Settimi](andrea.settimi@epfl.ch) and
         <img src="./week4/img/opt2.png" width="250" height="250" />
     </figure>
 </p>
-<p align="center"><i>On the first image: BFGS. On the second image: L-GMRES/GMRES</i></p>
+<p align="left"><i>On the first image: BFGS. On the second image: L-GMRES/GMRES</i></p>
 
 #### **Dependencies**
 You can use anaconda and create a new environment:
