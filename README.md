@@ -29,11 +29,12 @@ python ./week4/cmd.py
 ```
 For more info:
 ```bash
-usage: cmd.py [-h] [--opt_type {BFGS,LGMRES,GMRES}] [-A MATRIX [MATRIX ...]] [-b VECTOR [VECTOR ...]] [-x INITIAL_GUESS [INITIAL_GUESS ...]] [-t TOLERANCE] [-m MAX_ITER] [-p PLOT]
+usage: cmd.py [-h] [--opt_type {BFGS,LGMRES,GMRES}] [-nrows NROWS] [-A MATRIX [MATRIX ...]] [-b VECTOR [VECTOR ...]] [-x INITIAL_GUESS [INITIAL_GUESS ...]] [-t TOLERANCE] [-m MAX_ITER] [-p PLOT]
 
 optional arguments:
   -h, --help            show this help message and exit
   --opt_type {BFGS,LGMRES,GMRES}
+  -nrows NROWS          Number of rows for the matrix
   -A MATRIX [MATRIX ...], --matrix MATRIX [MATRIX ...]
                         The matrix A
   -b VECTOR [VECTOR ...], --vector VECTOR [VECTOR ...]
