@@ -8,11 +8,11 @@ Repo for sp4e course's homework for [Andrea Settimi](andrea.settimi@epfl.ch) and
 
 <p>
     <figure align="center">
-        <img src="./week4/img/opt1.png" width="300" height="300" />
-        <img src="./week4/img/opt2.png" width="300" height="300" />
+        <img src="./week4/img/opt1.png" width="250" height="250" />
+        <img src="./week4/img/opt2.png" width="250" height="250" />
     </figure>
 </p>
-<p align="left"><i>On the top: BFGS. On the bottom: L-GMRES/GMRES</i></p>
+<p align="center"><i>On the first image: BFGS. On the second image: L-GMRES/GMRES</i></p>
 
 #### **Dependencies**
 You can use anaconda and create a new environment:
@@ -46,3 +46,6 @@ optional arguments:
                         the maximum number of iterations
   -p PLOT, --plot PLOT  whether to plot the result or not
 ```
+
+#### **Notes**
+> ⚠️ Passing a matrix to the commandline flag is not working. The function `eval()` cannot properly transform it into an array (?)
