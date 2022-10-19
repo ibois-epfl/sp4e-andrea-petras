@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 from optimizer import quadratic_function
-from optimizer import plot_3d_LGMRES
+from optimizer import plot_3d
 from optimizer import optimizator
 
 
 # implement a generalized minimal residual method with einsum, independent of the matrix size and record each iteration
-def GMRES(A: np.ndarray, b: np.ndarray, x0: np.ndarray, tol: float, max_iter: int, isPlotted: bool = True)-> np.ndarray:
+def custom_GMRES(A: np.ndarray, b: np.ndarray, x0: float, tol: float, max_iter: int, isPlotted: bool = True)-> np.ndarray:
     """
     generalized minimal residual method with einsum, independent of the matrix size and record each iteration
 
@@ -23,9 +23,12 @@ def GMRES(A: np.ndarray, b: np.ndarray, x0: np.ndarray, tol: float, max_iter: in
         :return: np.ndarray The solution of the linear system
     """
     # clear out the global variables
+    global xk_list
+    xk_list = []
     xk_list.clear()
 
     # append the initial guess
+    x0 = np.array([x0, x0], dtype=float)
     xk_list.append(x0)
 
     # initialize the variables
@@ -59,17 +62,13 @@ def GMRES(A: np.ndarray, b: np.ndarray, x0: np.ndarray, tol: float, max_iter: in
     
     # plot it
     if isPlotted:
-        plot_3d_LGMRES(xk_list)
+        plot_3d(iters=xk_list)
 
     # return the solution
     return xk
 
 
 def main()-> int:
-
-    global xk_list
-
-    xk_list = []
 
     # define the matrix A
     A = np.array([[8, 1], [1, 3]])
@@ -78,7 +77,7 @@ def main()-> int:
     b = np.array([2, 4])
 
     # define the initial guess
-    x0 = np.array([10, 10])
+    x0 = 10.
 
     # define the tolerance
     tol = 1e-6
@@ -87,7 +86,7 @@ def main()-> int:
     max_iter = 100
 
     # call the GMRES function
-    GMRES(A, b, x0, tol, max_iter)
+    custom_GMRES(A, b, x0, tol, max_iter)
 
     return 0
 

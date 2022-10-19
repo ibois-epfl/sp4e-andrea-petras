@@ -36,43 +36,12 @@ def quadratic_function(x: float,
     # return the value of the quadratic function at x
     return S
 
-def plot_3d_BFGS()-> None:
+def plot_3d(iters: list, func: Callable = quadratic_function)-> None:
     """
     Plot the quadratic function with the minimum found by the optimizer BFGS and its iterations.
 
-        :return: None
-    """
-    # create the grid
-    X = np.arange(-10, 10, 0.25)
-    Y = np.arange(-10, 10, 0.25)
-    X, Y = np.meshgrid(X, Y)
-    Z = quadratic_function(X) + quadratic_function(Y)
-
-    # create the figure as transparent and in axonometric view
-    fig = plt.figure(figsize=(5, 5), dpi=100, facecolor='w', edgecolor='k')
-
-    # add a transparent add_subplot
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(X, Y, Z, color="blue", edgecolor='none', alpha=.4)
-    ax.view_init(30, -45)
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.set_zlabel('z')
-
-    # print all the points in xk_list
-    for i in range(len(xk_list)):
-        ax.scatter(xk_list[i], xk_list[i], 2*quadratic_function(xk_list[i]), color='red')
-
-    # add lines between the points
-    for i in range(len(xk_list)-1):
-        ax.plot([xk_list[i], xk_list[i+1]], [xk_list[i], xk_list[i+1]], [2*quadratic_function(xk_list[i]), 2*quadratic_function(xk_list[i+1])], color='green')
-
-    # show the plot
-    plt.show()
-
-def plot_3d_LGMRES(iters: list)-> None:
-    """
-    Plot the quadratic function with the minimum found by the optimizer LGMRES and its iterations.
+        :param iters: list The list of the iterations
+        :param func: Callable functor of the quadratic function
 
         :return: None
     """
@@ -93,14 +62,18 @@ def plot_3d_LGMRES(iters: list)-> None:
     ax.set_ylabel('y')
     ax.set_zlabel('z')
 
-    # print all the points in iterations
-    for i in range(len(iters)):
-        ax.scatter(iters[i][0], iters[i][1], 2*quadratic_function(iters[i]), color='red')
-
-    # draw the lines between the points
-    for i in range(len(iters)-1):
-        ax.plot([iters[i][0], iters[i+1][0]], [iters[i][1], iters[i+1][1]], [2*quadratic_function(iters[i][0]), 2*quadratic_function(iters[i+1][0])], color='green')
-
+    # print all the points and lines for iterations
+    # check for the shape of the list
+    if isinstance(iters[0], float) or isinstance(iters[0], int):
+        for i in range(len(iters)):
+            ax.scatter(iters[i], iters[i], 2*quadratic_function(iters[i]), color='red')
+        for i in range(len(iters)-1):
+            ax.plot([iters[i], iters[i+1]], [iters[i], iters[i+1]], [2*quadratic_function(iters[i]), 2*quadratic_function(iters[i+1])], color='green')
+    else:
+        for i in range(len(iters)):
+            ax.scatter(iters[i][0], iters[i][1], 2*quadratic_function(iters[i]), color='red')
+        for i in range(len(iters)-1):
+            ax.plot([iters[i][0], iters[i+1][0]], [iters[i][1], iters[i+1][1]], [2*quadratic_function(iters[i][0]), 2*quadratic_function(iters[i+1][0])], color='green')
     # show the plot
     plt.show()
 
@@ -114,21 +87,29 @@ def callback_storer(xk: np.ndarray)-> None:
     """
     xk_list.append(xk)
 
-def optimizator(opt_type: str, x0:float = 10, func: Callable = quadratic_function, isPlotted: bool = True)-> float:
+def optimizator(opt_type: str,
+                x0:float = 10,
+                A: np.ndarray = np.array([[8, 1], [1, 3]]),
+                b: np.ndarray = np.array([2, 4]),
+                func: Callable = quadratic_function,
+                isPlotted: bool = True)-> float:
     """
     Find the minimum of the quadratic function.
 
         :param opt_type: str The type of the optimizer to use. It can be "BFGS" or "LGMRES"
         :param x0: float The initial guess
         :param func: Callable functor of the quadratic function
+        :param A: np.ndarray The matrix A
+        :param b: np.ndarray The vector b
         :param isPlotted: bool True if the the optimization process is plotted
 
         :return: float The minimum of the quadratic function
     """
-    # clear out the storer for iterations
+    # # clear out the storer for iterations
+    global xk_list
+    xk_list = []
     xk_list.clear()
 
-    # run otpimization
     if opt_type == "BFGS":
         from scipy.optimize import minimize
 
@@ -136,51 +117,56 @@ def optimizator(opt_type: str, x0:float = 10, func: Callable = quadratic_functio
         xk_list.append(x0)
 
         # run minimizer BFGS
-        res = minimize(func, 
+        res = minimize(func,
                         x0, 
                         method= 'BFGS', 
                         callback=callback_storer,
                         options={'disp': False})
-
-        # plot it
-        if isPlotted:
-            plot_3d_BFGS()
 
     elif opt_type == "LGMRES":
         from scipy.sparse.linalg import lgmres
         from scipy.sparse import csc_matrix
 
         # parse matrix A for scipy
-        A = csc_matrix([[8, 1], [1, 3]], dtype=float)
-        b = np.array([2, 4], dtype=float)
+        A_csc = csc_matrix(A)
 
         # format initial guess
         x0 = np.array([x0, x0], dtype=float)
         xk_list.append(x0)
 
         # run the optimization
-        res, info = lgmres(A, b, x0, callback=callback_storer)
+        res, info = lgmres(A_csc, b, x0, callback=callback_storer)
 
         # check for successful convergence
         if info > 0:
             raise Exception("The algorithm did not converge.")
 
-        # plot it
-        if isPlotted:
-            plot_3d_LGMRES(xk_list)
+    # plot it
+    if isPlotted:
+        plot_3d(iters=xk_list)
 
     else:
         raise ValueError("Invalid opt_type")
 
-
 def main()-> int:
 
-    global xk_list
+    # define the matrix A
+    A_custom = np.array([[8, 3], [1, 3]])
 
-    xk_list = []
+    # define the vector b
+    b_custom = np.array([2, 4])
 
-    optimizator(opt_type="BFGS")
-    optimizator(opt_type="LGMRES")
+    # define the initial guess
+    x0t = 10.
+
+    # define a custom functor
+    functest = lambda x: quadratic_function(x, A=A_custom, b=b_custom)
+    print(functest(1))
+
+    # run the scipy optimizer
+    optimizator(func=functest, A=A_custom, b=b_custom, opt_type="BFGS")
+
+    optimizator(func=functest, A=A_custom, b=b_custom, opt_type="LGMRES")
 
     return 0;
 
