@@ -8,8 +8,7 @@ Repo for sp4e course's homework for [Andrea Settimi](andrea.settimi@epfl.ch) and
 
 <p>
     <figure align="center">
-        <img src="./week4/img/opt1.png" width="300" height="300" />
-        <img src="./week4/img/opt2.png" width="300" height="300" />
+        <img src="./week4/img/opt1.png" width="300" height="300" /> <img src="./week4/img/opt2.png" width="300" height="300" />
     </figure>
 </p>
 <p align="center"><i>On the left: BFGS. On the right: L-GMRES/GMRES</i></p>
