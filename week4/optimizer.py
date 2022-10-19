@@ -79,20 +79,20 @@ def callback_storer(xk: float)-> None:
         """
     xk_list.append(xk)
 
-def optimizer_bfgs(s: Callable, isPlotted: bool)-> float:
+def optimizer(s: Callable = quadratic_function, x0:float = 0, isPlotted: bool = true)-> float:
     """
     Find the minimum of the quadratic function using the scipy.optimize.minimize function
 
         :param s: Callable functor of the  quadratic function
+        :param x0: float The initial guess
         :param isPlotted: bool True if the the optimization process is plotted
 
         :return: float The minimum of the quadratic function
     """"
     from scipy.optimize import minimize
-    from scipy.sparse.linalg import lgmres
 
     # first guess
-    x0 = 10
+    x0 = 0
 
     # clear out the storer for iterations
     xk_list.clear()
@@ -102,18 +102,11 @@ def optimizer_bfgs(s: Callable, isPlotted: bool)-> float:
                    x0, 
                    method= 'BFGS', 
                    callback=callback_storer,
-                   options={'disp': False})
-
-    # plot the gradient descent
-    print(f"Stored iterations mid-results: {len(xk_list)}")
-    print(f"Stored iterations: {xk_list}")
-
-    # print results
-    print(f"first {xk_list[0]}, second {res.fun}")
-    print(f"test opti {quadratic_function(xk_list[0])}")
+                   options={'disp': True})
 
     # plot the solution
     plot_3d_quadratic_function()
+
 
 def main()-> int:
 
@@ -121,7 +114,7 @@ def main()-> int:
     xk_list = []
 
     # exercice 1.a
-    optimizer_bfgs(quadratic_function, True)
+    optimizer()
 
     return 0;
 
