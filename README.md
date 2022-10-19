@@ -48,4 +48,4 @@ optional arguments:
 ```
 
 #### **Notes**
-> ⚠️ Passing a matrix to the commandline flag is not working. The function `eval()` cannot properly transform it into an array (?)
+> ⚠️ Passing a matrix to the commandline: `python ./week4/cmd.py -A 3 3 3 3 -nrows 2`

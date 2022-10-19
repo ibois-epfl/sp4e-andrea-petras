@@ -53,16 +53,25 @@ if __name__ == "__main__":
                         type=str,
                         choices=["BFGS", "LGMRES", "GMRES"],
                         default="BFGS")
+    
+    parser.add_argument('-nrows',
+                        action='store',
+                        type=int,
+                        default=2,
+                        help="Number of rows for the matrix")
     parser.add_argument("-A", "--matrix",
-                        type=str,
+                        type=int,
+                        action="store",
                         nargs="+",
-                        default="[[8, 1], [1, 3]]",
+                        default= "8 1 1 3",
                         help="The matrix A")
     parser.add_argument("-b", "--vector",
-                        type=str,
+                        type=int,
+                        action="store",
                         nargs="+",
-                        default="[2, 4]",
+                        default= "2 4",
                         help="The vector b")
+
     parser.add_argument('-x', '--initial_guess',
                         type=float,
                         nargs='+',
@@ -91,8 +100,8 @@ if __name__ == "__main__":
     xk_list = []
 
     global A, b
-    A = np.array(eval(args.matrix))
-    b = np.array(eval(args.vector))
+    A = np.array(args.matrix).reshape((args.nrows, len(args.matrix)//args.nrows))
+    b = np.array(args.matrix)
     x = float(args.initial_guess)
 
     tol = args.tolerance
