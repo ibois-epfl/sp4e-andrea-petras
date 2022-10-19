@@ -33,6 +33,7 @@ def quadratic_function(x: float,
     # final expression for the quadratic function
     S = term1 + term2
 
+    # return the value of the quadratic function at x
     return S
 
 def plot_3d_BFGS()-> None:
