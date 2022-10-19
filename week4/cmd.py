@@ -4,13 +4,10 @@ import argparse
 from typing import Callable
 
 import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 from optimizer import optimizator
 from optimizer import quadratic_function
 from GMRES import custom_GMRES
-
 
 
 def main(_o_type: str,
