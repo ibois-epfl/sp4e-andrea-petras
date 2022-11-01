@@ -5,6 +5,7 @@
 #include "series.hh"
 #include "compute_arithmetic.hh"
 #include "compute_pi.hh"
+#include "print_series.hh"
 
 int main(int argc, char** argv)
 {
@@ -43,6 +44,10 @@ int main(int argc, char** argv)
     // Compute and print result
     double result = s->compute(N);
     std::cout << "Result of " << series << " series: " << result << std::endl;
+
+    // Exo 3.1-2-3
+    SCPP::PrintSeries ps = SCPP::PrintSeries(1, 10, *s);
+    ps.dump();
 
     return 0;
 }
