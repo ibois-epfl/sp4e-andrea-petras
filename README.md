@@ -87,13 +87,15 @@ Usage: 'executable-path' <N> <series>
 
 To run the command line program:
 ```bash
-'<path-to-exec>' 1222 pi 1 10 0
+'<path-to-exec>' 1222 pi 1 10 0 2 ","
 ```
 where,
 ```bash
+Usage: executuable <N> <series> <frequency> <maxiter> <printMode> <fileformat>
 <N>: number of terms
 <series>: arithmetic or pi
 <Frequency>: step between two outputs
 <Maxiter>: capping for steps
 <printMode>: 0 to print on screen, 1 to print on file
+<separator>: the format output file ',' = .csv, ' ' = .txt, ', ' = .txt, '|' = .psv
 ```
