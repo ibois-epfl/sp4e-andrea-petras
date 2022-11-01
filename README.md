@@ -84,3 +84,16 @@ Usage: 'executable-path' <N> <series>
 >       Series& p_Series;
 >   };
 > ```
+
+To run the command line program:
+```bash
+'<path-to-exec>' 1222 pi 1 10 0
+```
+where,
+```bash
+<N>: number of terms
+<series>: arithmetic or pi
+<Frequency>: step between two outputs
+<Maxiter>: capping for steps
+<printMode>: 0 to print on screen, 1 to print on file
+```
