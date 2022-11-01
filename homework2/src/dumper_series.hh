@@ -3,7 +3,7 @@
 
 namespace SCPP
 {
-    class DumperSeries: public Series
+    class DumperSeries
     {
     public:
         virtual void dump() = 0;
