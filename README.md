@@ -23,6 +23,7 @@ Here's the structure of the C++ project first committed:
 ```
 To config the project from the repository root:
 ```bash
+cd homework2
 mkdir build
 cd build
 cmake -S ../.. -B .
@@ -35,7 +36,7 @@ make
 
 To run the executable:
 ```bash
-'./homework2/build/bin/Homework2'
+'./bin/Homework2'
 ```
 ---
 ### Exercise 2: Series class
