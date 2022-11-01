@@ -4,7 +4,7 @@ Repo for sp4e course's homework for [Andrea Settimi](andrea.settimi@epfl.ch) and
 
 ## Homework 2: C++ classes
 
-The goal of the present exercise is to program a family of objects to compute series and to dump them.
+The goal of the present exercise is to program a family of objects to compute series and dump them.
 We are working on VSCode as IDE so the `.gitignore` is presenting some extra entries.
 
 ### Exercise 1: Creating a Project directory
@@ -40,4 +40,4 @@ To run the executable:
 ---
 ### Exercise 2: Series class
 
-*What is the best way/strategy to divide the work among yourselves?* In general, setting up a syntax convention might be helpful, this is why a `CONTRIBUTING.md` file has been added to the repo. Next, having a parent class the best way to split the work charge is for each one of us taking a child implementation. In the exercise 2 case, there are some reinforcements in the parent class that can guide developers such as the `virtual double compute(unsigned int N) = 0;` class member which forces the child class to implement this method.
+*What is the best way/strategy to divide the work among yourselves?* In general, setting up a syntax convention might be helpful, this is why a `CONTRIBUTING.md` file has been added to the repo. Next, having a parent class the best way to split the work charge is for each one of us to take a child implementation. In the exercise 2 case, there are some reinforcements in the parent class that can guide developers such as the `virtual double compute(unsigned int N) = 0;` class member which forces the child class to implement this method.
