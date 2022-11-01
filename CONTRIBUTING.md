@@ -57,6 +57,11 @@ private:
     static int s_Instance; // s_VariableName for static variable
 };
 
+// Filenames should start with small letters and written in snake case
+src
+└── series_example.cc
+└── series_example.hh
+
 // Start headers with 
 #pragma once
 ```
