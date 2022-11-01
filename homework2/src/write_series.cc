@@ -1,6 +1,5 @@
 #include "write_series.hh"
 #include <iostream>
-#include <string>
 #include <fstream>
 
 namespace SCPP
@@ -11,7 +10,8 @@ namespace SCPP
 
     void WriteSeries::dump() 
     {
-        std::string path = "../series.txt";
+        std::string path = "../series."+ m_Ending;
+
         std::ofstream file;
         file.open(path.c_str(), std::ofstream::out | std::ofstream::trunc);
 
@@ -30,4 +30,23 @@ namespace SCPP
         file.flush();
         file.close();
     };
+
+    void WriteSeries::SetSeparator(char separator){
+        switch (separator)
+        {
+        case ',':
+            m_Ending = "csv";
+            break;
+        case ' ':
+        case '\t':
+            m_Ending = "txt";
+            break;
+        case '|':
+            m_Ending = "psv";
+            break;
+        default:
+            m_Ending = "txt";
+            break;
+        }
+    }
 }

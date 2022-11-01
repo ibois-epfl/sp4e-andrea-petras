@@ -62,6 +62,7 @@ int main(int argc, char** argv)
     else if (printMode == 1)
     {
         SCPP::WriteSeries writer(frequency, maxiter, *s);
+        writer.SetSeparator('l');
         writer.dump();
     }
     else
