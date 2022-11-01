@@ -1,6 +1,6 @@
 #pragma once
 #include "series.hh"
-
+#include <ostream>
 namespace SCPP
 {
     class DumperSeries
@@ -11,7 +11,7 @@ namespace SCPP
         {};
         ~DumperSeries() = default;
 
-        virtual void dump() = 0;
+        virtual void dump(std::ostream& os) = 0;
 
     protected:
         Series& p_Series;
