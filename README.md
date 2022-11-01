@@ -97,3 +97,15 @@ where,
 <Maxiter>: capping for steps
 <printMode>: 0 to print on screen, 1 to print on file
 ```
+
+---
+### Exercice 4: *std::ostram manipulation*
+
+> ⚠️ Note: we found out that the overloading function of the operator `<<` wasn't compiling on VScode/gcc. Hence, we had to add the keyword `friend`:
+> ```cpp
+> inline friend std::ostream& operator<<(std::ostream& stream, DumperSeries& _this)
+> {
+>     _this.dump(stream);
+>     return stream;
+> }
+> ```
