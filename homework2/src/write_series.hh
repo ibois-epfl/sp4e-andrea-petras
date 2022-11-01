@@ -17,8 +17,8 @@ namespace SCPP
         /// @brief output (to a file) every step out of frequency that is lower than maxiter.
         virtual void dump() override;
 
-        /// @brief change file ending 
-        /// @param separator: ',' = .csv, ' ' = .txt, '\t' = .txt, '|' = .psv,
+        /// @brief change file format 
+        /// @param separator: ',' = .csv, ' ' = .txt, '\t' = .txt, '|' = .psv
         void SetSeparator(char separator);
     
     public:
