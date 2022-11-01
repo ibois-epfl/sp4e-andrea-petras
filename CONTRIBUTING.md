@@ -4,10 +4,11 @@ Here's you can find some documentations and guidelines to contribute to homework
 
 ### GitHub commit convetion
 All commits need to be labeled with a tag among these:
-```bash
+```
 git commit -m "ADD:<description>"         <--- for adding new elements
 git commit -m "FIX:<description>"         <--- for fixing (errors, typos)
 git commit -m "MILESTONE:<description>"   <--- for capping moment in development
+git commit -m "UPDATE:<description>"      <--- for moddification to the same file
 git commit -m "MISC:<description>"        <--- for any other reasons to be described
 ```
 
