@@ -9,6 +9,8 @@ namespace SCPP
 
     void PrintSeries::dump(std::ostream& os) 
     {
+        os.precision(p_Precision);
+
         if (std::isnan(p_Series.getAnalyticPrediction()))
         {
             os << "Analytic prediction not available" << std::endl;
