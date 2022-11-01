@@ -101,7 +101,7 @@ where,
 ---
 ### Exercice 4: *std::ostram manipulation*
 
-> ⚠️ Note: we found out that the overloading function of the operator `<<` wasn't compiling on VScode/gcc. Hence, we had to add the keyword `friend`:
+> ⚠️ Note: we found out that the overloading function of the operator `<<` wasn't compiling on VScode/gcc. Hence, we had to add the keyword `friend` (exo 4.5):
 > ```cpp
 > inline friend std::ostream& operator<<(std::ostream& stream, DumperSeries& _this)
 > {
