@@ -12,6 +12,7 @@ git commit -m "UPDATE:<description>"      <--- for moddification to the same fil
 git commit -m "MISC:<description>"        <--- for any other reasons to be described
 git commit -m "WIP:<description>"         <--- for not finished work
 git commit -m "REFACTOR:<description>"    <--- for refactored code
+git commit -m "MERGE:<description>"       <--- for merging operations
 ```
 
 ### Naming/C++ convention
