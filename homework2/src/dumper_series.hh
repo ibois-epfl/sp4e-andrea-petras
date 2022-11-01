@@ -1,6 +1,7 @@
 #pragma once
 #include "series.hh"
 #include <ostream>
+
 namespace SCPP
 {
     class DumperSeries
@@ -14,6 +15,12 @@ namespace SCPP
         virtual void dump(std::ostream& os) = 0;
 
         virtual void setPrecision(unsigned int precision) {p_Precision = precision; };
+
+        inline friend std::ostream& operator<<(std::ostream& stream, DumperSeries& _this)
+        {
+            _this.dump(stream);
+            return stream;
+        }
 
     protected:
         Series& p_Series;
