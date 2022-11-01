@@ -36,7 +36,7 @@ make
 
 To run the executable:
 ```bash
-'./build/bin/Homework2'
+'./bin/Homework2'
 ```
 ---
 ### Exercise 2: Series class
