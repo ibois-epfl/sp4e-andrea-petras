@@ -2,7 +2,16 @@
 ## Guide for contributors
 Here's you can find some documentations and guidelines to contribute to homework2.
 
-### Naming convention
+### GitHub commit convetion
+All commits need to be labeled with a tag among these:
+```bash
+git commit -m "ADD:<description>"         <--- for adding new elements
+git commit -m "FIX:<description>"         <--- for fixing (errors, typos)
+git commit -m "MILESTONE:<description>"   <--- for capping moment in development
+git commit -m "MISC:<description>"        <--- for any other reasons to be described
+```
+
+### Naming/C++ convention
 Here's the naming convention for this project:
 - `localVariable`: lowerCamelCase.
 - `type PrivateVariable`: public member of a class
