@@ -10,19 +10,23 @@
 
 int main(int argc, char** argv)
 {
-    /* Exo 2.5 */
-
     // Parse arguments
-    if (argc != 3 || std::string(argv[1]) == "help" || std::string(argv[1]) == "H" || std::string(argv[0]) == "h")
+    if (argc != 6 || std::string(argv[1]) == "help" || std::string(argv[1]) == "H" || std::string(argv[0]) == "h")
     {
-        std::cout << "Usage: " << argv[0] << " <N> <series>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <N> <series> <frequency> <maxiter> <printMode>" << std::endl;
         std::cout << "N: number of terms" << std::endl;
         std::cout << "series: arithmetic or pi" << std::endl;
+        std::cout << "Frequency: step between two outputs" << std::endl;
+        std::cout << "Maxiter: capping for steps" << std::endl;
+        std::cout << "printMode: 0 to print on screen, 1 to print on file" << std::endl;
         return 1;
     }
 
     unsigned int N = std::stoi(argv[1]);
     std::string series = argv[2];
+    double frequency = std::stoi(argv[3]);
+    double maxiter = std::stoi(argv[4]);
+    int printMode = std::stoi(argv[5]);
 
     // Allocate pointer but do not allocate memory
     std::unique_ptr<SCPP::Series> s;
@@ -42,19 +46,22 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    // Compute and print result
-    double result = s->compute(N);
-    std::cout << "Result of " << series << " series: " << result << std::endl;
-
-    /* Exo 3 */
-
-    // Print series steps
-    SCPP::PrintSeries ps = SCPP::PrintSeries(1, 10, *s);
-    ps.dump();
-
-    // Write series to file
-    SCPP::WriteSeries ws = SCPP::WriteSeries(1, 10, *s);
-    ws.dump();
+    // Print series on screen or in file
+    if (printMode == 0)
+    {
+        SCPP::PrintSeries printer(frequency, maxiter, *s);
+        printer.dump();
+    }
+    else if (printMode == 1)
+    {
+        SCPP::WriteSeries writer(frequency, maxiter, *s);
+        writer.dump();
+    }
+    else
+    {
+        std::cout << "Unknown print mode: " << printMode << std::endl;
+        return 1;
+    }
 
     return 0;
 }
