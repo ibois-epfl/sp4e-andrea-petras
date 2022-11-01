@@ -44,3 +44,6 @@ docs/**/*
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+## ------------->> Proper to Homework 2 <<---------------
+series.txt
