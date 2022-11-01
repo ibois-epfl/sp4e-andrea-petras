@@ -73,5 +73,21 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    // convert into code the followin RiemannIntegral
+    // \int_a^b f(x) d x=\lim _{N \rightarrow \infty} \sum_{i=1}^N f\left(x_i\right) \Delta x
+
+
+    double integral = 0.0;
+    for (unsigned int i = 1; i <= N; i++)
+    {
+        double x_i = s->compute(i);
+        double delta_x = s->compute(i) - s->compute(i - 1);
+        integral += x_i * delta_x;
+    }
+
+    std::cout << "Integral of " << series << " series: " << integral << std::endl;
+    std::cout << "Analytic prediction: " << s->getAnalyticPrediction() << std::endl;
+
+
     return 0;
 }
