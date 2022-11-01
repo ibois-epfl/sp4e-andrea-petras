@@ -41,3 +41,10 @@ To run the executable:
 ### Exercise 2: Series class
 
 *What is the best way/strategy to divide the work among yourselves?* In general, setting up a syntax convention might be helpful, this is why a `CONTRIBUTING.md` file has been added to the repo. Next, having a parent class the best way to split the work charge is for each one of us to take a child implementation. In the exercise 2 case, there are some reinforcements in the parent class that can guide developers such as the `virtual double compute(unsigned int N) = 0;` class member which forces the child class to implement this method.
+
+To run the command line C++ program of exercice 2.6:
+```bash
+Usage: 'executable-path' <N> <series>
+<N>: number of terms
+<series>: arithmetic or pi
+```
