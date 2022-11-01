@@ -19,6 +19,7 @@ Here's the naming convention for this project:
 - `type PrivateVariable`: public member of a class
 - `type m_PrivateVariable`: Hungarian notation with UpperCamelCase for private class members.
 - `static type s_StaticVariable`: Hungarian notation with UpperCamelCase for static members of class.
+- `type p_ProtectedVariable`: Hungarian notation with UpperCamelCase for protected members of class.
 - `APP_SPEC`: Constants with SNAKE_UPPER_CASE.
 - All the other naming uses UpperCamelCase.
 
@@ -63,9 +64,11 @@ private:
 
 // Also a field indicator to separate the functions and attributes
 private:
-    // private variables uses Hungarian notation with UpperCamelCase
-    int m_PrivateVariable; // m_VariableName for normal variable
-    static int s_Instance; // s_VariableName for static variable
+    int m_PrivateVariable;  // m_VariableName for normal variable with Hungarian notation
+    static int s_Instance;  // s_VariableName for static variable with Hungarian notation
+
+protected:
+    double p_ProtectedVariable;  // p_ProtectedName for static variable with Hungarian notation
 };
 
 // Filenames should start with small letters and written in snake case
