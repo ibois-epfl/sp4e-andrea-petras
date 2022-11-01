@@ -7,20 +7,20 @@ namespace SCPP
         : DumperSeries(series), Frequency(frequency), Maxiter(maxiter)
     {};
 
-    void PrintSeries::dump() 
+    void PrintSeries::dump(std::ostream& os) 
     {
         if (std::isnan(p_Series.getAnalyticPrediction()))
         {
-            std::cout << "Analytic prediction not available" << std::endl;
+            os << "Analytic prediction not available" << std::endl;
         }
         else
         {
-            std::cout << "Analytic prediction: " << p_Series.getAnalyticPrediction() << std::endl;
+            os << "Analytic prediction: " << p_Series.getAnalyticPrediction() << std::endl;
         }
 
         for (double i = 0; i < Maxiter; i += Frequency)
         {
-            std::cout << "Term " << i << ": " << p_Series.compute(i) << std::endl;
+            os << "Term " << i << ": " << p_Series.compute(i) << std::endl;
         }
     };
 }
