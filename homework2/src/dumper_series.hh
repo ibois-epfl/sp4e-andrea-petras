@@ -13,6 +13,8 @@ namespace SCPP
 
         virtual void dump(std::ostream& os) = 0;
 
+        virtual void setPrecision(unsigned int precision);
+
     protected:
         Series& p_Series;
     };
