@@ -8,7 +8,7 @@ namespace SCPP
         : DumperSeries(series), Frequency(frequency), Maxiter(maxiter)
     {};
 
-    void WriteSeries::dump() 
+    void WriteSeries::dump(std::ostream& os) 
     {
         std::string path = "../series." + m_Ending;
 

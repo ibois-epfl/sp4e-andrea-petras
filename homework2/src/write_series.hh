@@ -1,6 +1,9 @@
 #pragma once
+
 #include "series.hh"
 #include "dumper_series.hh"
+#include <ostream>
+#include <iostream>
 #include <string>
 
 namespace SCPP
@@ -15,7 +18,7 @@ namespace SCPP
         WriteSeries(double frequency, double maxiter, Series& series);
 
         /// @brief output (to a file) every step out of frequency that is lower than maxiter.
-        virtual void dump() override;
+        virtual void dump(std::ostream& os = std::cout) override;  // FIXME: find better design than default std::cout as parameter
 
         /// @brief change file format 
         /// @param separator: ',' = .csv, ' ' = .txt, '\t' = .txt, '|' = .psv

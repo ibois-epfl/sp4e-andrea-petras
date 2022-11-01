@@ -2,6 +2,7 @@
 #include <cmath>
 #include <memory>
 #include <sstream>
+#include <fstream>
 
 #include "series.hh"
 #include "compute_arithmetic.hh"
@@ -56,21 +57,19 @@ int main(int argc, char** argv)
     }
 
     // Print series on screen or in file
-    if (printMode == 0)
+    SCPP::PrintSeries p(frequency, maxiter, *s);
+
+    if (printMode == 1)
     {
-        SCPP::PrintSeries printer(frequency, maxiter, *s);
-        printer.dump();
-    }
-    else if (printMode == 1)
-    {
-        SCPP::WriteSeries writer(frequency, maxiter, *s);
-        writer.SetSeparator(separator);
-        writer.dump();
+        std::ofstream file;
+        file.open("../series.txt", std::ofstream::out | std::ofstream::trunc);
+        file << p;
+        file.flush();
+        file.close();
     }
     else
     {
-        std::cout << "Unknown print mode: " << printMode << std::endl;
-        return 1;
+        std::cout << p;
     }
 
 

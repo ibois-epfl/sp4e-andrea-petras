@@ -2,6 +2,8 @@
 
 #include "series.hh"
 #include "dumper_series.hh"
+#include <iostream>
+#include <ostream>
 
 namespace SCPP
 {
@@ -15,7 +17,7 @@ namespace SCPP
         PrintSeries(double frequency, double maxiter, Series& series);
 
         /// @brief output (to screen) every step out of frequency that is lower than maxiter.
-        virtual void dump() override;
+        virtual void dump(std::ostream& os = std::cout) override;
 
     public:
         double Frequency;
