@@ -45,7 +45,9 @@ int main(int argc, char** argv)
     double result = s->compute(N);
     std::cout << "Result of " << series << " series: " << result << std::endl;
 
-    // Exo 3.1-2-3
+    /* Exo 3.1.. */
+
+    // Print series steps
     SCPP::PrintSeries ps = SCPP::PrintSeries(1, 10, *s);
     ps.dump();
 
