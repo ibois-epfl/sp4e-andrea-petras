@@ -10,5 +10,6 @@ namespace SCPP
         ~ComputePi() = default;
 
         double compute(unsigned int N) override;
+        double getAnalyticPrediction() override;
     };
 }

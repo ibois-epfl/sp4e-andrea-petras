@@ -13,4 +13,9 @@ namespace SCPP
         pi = std::sqrt(6.0 * pi);
         return pi;
     };
+
+    double ComputePi::getAnalyticPrediction()
+    {
+        return M_PI;
+    }
 }
