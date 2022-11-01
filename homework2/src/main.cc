@@ -48,13 +48,18 @@ int main(int argc, char** argv)
 
     /* Exo 3 */
 
+
     // Print series steps
     SCPP::PrintSeries ps = SCPP::PrintSeries(1, 10, *s);
     ps.dump();
 
     // Write series to file
     SCPP::WriteSeries ws = SCPP::WriteSeries(1, 10, *s);
+    ws.SetSeparator('l');
     ws.dump();
+
+
+
 
     return 0;
 }
