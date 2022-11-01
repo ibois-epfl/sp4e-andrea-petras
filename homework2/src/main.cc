@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <memory>
+#include <sstream>
 
 #include "series.hh"
 #include "compute_arithmetic.hh"
@@ -11,6 +12,8 @@
 int main(int argc, char** argv)
 {
     // Parse arguments
+    std::stringstream convert;
+
     if (argc != 6 || std::string(argv[1]) == "help" || std::string(argv[1]) == "H" || std::string(argv[0]) == "h")
     {
         std::cout << "Usage: " << argv[0] << " <N> <series> <frequency> <maxiter> <printMode>" << std::endl;
@@ -21,12 +24,16 @@ int main(int argc, char** argv)
         std::cout << "printMode: 0 to print on screen, 1 to print on file" << std::endl;
         return 1;
     }
+    
+    convert << argv[1] << " " << argv[2] << " " << argv[3] << " " << argv[4] << " " << argv[5];
+    
+    unsigned int N;
+    std::string series;
+    double frequency;
+    double maxiter;
+    unsigned int printMode;
 
-    unsigned int N = std::stoi(argv[1]);
-    std::string series = argv[2];
-    double frequency = std::stoi(argv[3]);
-    double maxiter = std::stoi(argv[4]);
-    int printMode = std::stoi(argv[5]);
+    convert >> N >> series >> frequency >> maxiter >> printMode;
 
     // Allocate pointer but do not allocate memory
     std::unique_ptr<SCPP::Series> s;

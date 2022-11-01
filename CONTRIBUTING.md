@@ -11,6 +11,7 @@ git commit -m "MILESTONE:<description>"   <--- for capping moment in development
 git commit -m "UPDATE:<description>"      <--- for moddification to the same file
 git commit -m "MISC:<description>"        <--- for any other reasons to be described
 git commit -m "WIP:<description>"         <--- for not finished work
+git commit -m "REFACTOR:<description>"    <--- for refactored code
 ```
 
 ### Naming/C++ convention
