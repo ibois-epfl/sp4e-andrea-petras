@@ -11,7 +11,6 @@ namespace SCPP
     void WriteSeries::dump(std::ostream& os) 
     {
         std::string path = "../series." + m_Ending;
-
         std::ofstream file;
         file.open(path.c_str(), std::ofstream::out | std::ofstream::trunc);
 

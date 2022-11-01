@@ -57,21 +57,19 @@ int main(int argc, char** argv)
     }
 
     // Print series on screen or in file
+    std::ofstream os;
     SCPP::PrintSeries p(frequency, maxiter, *s);
+    SCPP::WriteSeries w(frequency, maxiter, *s);
+    w.SetSeparator(separator);
 
     if (printMode == 1)
     {
-        std::ofstream file;
-        file.open("../series.txt", std::ofstream::out | std::ofstream::trunc);
-        file << p;
-        file.flush();
-        file.close();
+        os << w;
     }
     else
     {
         std::cout << p;
     }
-
 
     return 0;
 }

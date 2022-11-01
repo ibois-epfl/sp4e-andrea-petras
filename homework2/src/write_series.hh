@@ -18,7 +18,7 @@ namespace SCPP
         WriteSeries(double frequency, double maxiter, Series& series);
 
         /// @brief output (to a file) every step out of frequency that is lower than maxiter.
-        virtual void dump(std::ostream& os = std::cout) override;  // FIXME: find better design than default std::cout as parameter
+        virtual void dump(std::ostream& os) override;
 
         /// @brief change file format 
         /// @param separator: ',' = .csv, ' ' = .txt, '\t' = .txt, '|' = .psv
