@@ -37,3 +37,7 @@ To run the executable:
 ```bash
 './homework2/build/bin/Homework2'
 ```
+---
+### Exercise 2: Series class
+
+*What is the best way/strategy to divide the work among yourselves?* In general, setting up a syntax convention might be helpful, this is why a `CONTRIBUTING.md` file has been added to the repo. Next, having a parent class the best way to split the work charge is for each one of us taking a child implementation. In the exercise 2 case, there are some reinforcements in the parent class that can guide developers such as the `virtual double compute(unsigned int N) = 0;` class member which forces the child class to implement this method.
