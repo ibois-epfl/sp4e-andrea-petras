@@ -1,6 +1,7 @@
 
 # sp4e-andrea-petras
 Repo for sp4e course's homework for [Andrea Settimi](andrea.settimi@epfl.ch) and [Petras Vestartas](petras.vestartas@epfl.ch).
+*** >>>> Please see the `tags` to find the code corresponding to each exercise. <<<<< ***
 
 ## Homework 2: *C++ classes*
 
