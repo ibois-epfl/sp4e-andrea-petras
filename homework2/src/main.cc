@@ -22,7 +22,7 @@ int main(int argc, char** argv)
         std::cout << "series: arithmetic or pi" << std::endl;
         std::cout << "Frequency: step between two outputs" << std::endl;
         std::cout << "Maxiter: capping for steps" << std::endl;
-        std::cout << "printMode: 0 to print on screen, 1 to print on file" << std::endl;
+        std::cout << "printMode: 0 to print on screen, 1 to print on file, 2 print and write on file" << std::endl;
         std::cout << "separator: the format output file ',' = .csv, ' ' = .txt, '\t' = .txt, '|' = .psv" << std::endl;
         return 1;
     }
@@ -66,9 +66,19 @@ int main(int argc, char** argv)
     {
         os << w;
     }
-    else
+    else if (printMode == 0)
     {
         std::cout << p;
+    }
+    else if (printMode == 2)
+    {
+        os << w;
+        std::cout << p;
+    }
+    else
+    {
+        std::cout << "Unknown print mode: " << printMode << std::endl;
+        return 1;
     }
 
     return 0;
