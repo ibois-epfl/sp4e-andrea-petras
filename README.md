@@ -113,7 +113,7 @@ Usage: executuable <N> <series> <frequency> <maxiter> <printMode> <fileformat>
 > ```
 
 ---
-### Exercice 5: *Series complexity*
+### Exercise 5: *Series complexity*
 
 #### 5.1: evaluation of global complexity
 
@@ -207,4 +207,15 @@ Usage: <exec-path> <N> <series> <frequency> <maxiter> <printMode> <fileformat>
 <Maxiter>: capping for steps
 <printMode>: 0 to print on screen, 1 to print on file, 2 print and write on file
 <separator>: the format output file ',' = .csv, ' ' = .txt, '     ' = .txt, '|' = .psv
+```
+
+---
+
+### Exercise 6: *Integral*
+
+#### 6.4
+```
+Riemann Integral of x^3 from 0 to 1: 0.247506
+Riemann Integral of cos(x) from 0 to pi: 0.015708
+Riemann Integral of sin(x) from 0 to pi/2: 0.996068
 ```
