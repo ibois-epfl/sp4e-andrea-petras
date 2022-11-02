@@ -15,10 +15,12 @@ namespace SCPP
         inline void setA(double a) { m_a = a; };
         inline void setB(double b) { m_b = b; };
         inline void setF(std::function <double(double)> f) { m_f = f; };
+        inline void setExpectedValue(double expectedValue) { m_ExpectedValue = expectedValue; };
 
     private:
         double m_a;
         double m_b;
         std::function <double(double)> m_f;
+        double m_ExpectedValue;
     };
 }

@@ -209,7 +209,6 @@ Usage: <exec-path> <N> <series> <frequency> <maxiter> <printMode> <fileformat>
 <printMode>: 0 to print on screen, 1 to print on file, 2 print and write on file
 <separator>: the format output file ',' = .csv, ' ' = .txt, '     ' = .txt, '|' = .psv
 ```
-
 ---
 
 ### Exercise 6: *Integral*
@@ -217,7 +216,6 @@ To use the code with custom values of bounds `a` and `b`:
 ```bash
 $ '~/sp4e-andrea-petras/homework2/build/bin/Homework2' 2000 1 10
 ```
-
 To output the 3 integrals of exo 6.3 equations:
 
 ```
@@ -230,12 +228,17 @@ _/  0         _/  0               _/  0
 ```
 Enter these flags:
 ```bash
-$ '~/sp4e-andrea-petras/homework2/build/bin/Homework2' 2000 -1 -1
+$ '~/sp4e-andrea-petras/homework2/build/bin/Homework2' 10000 -1 -1
 ```
-and here are the results with the corresponding value at which the N stops (exo 6.4):
+and here are the results of this command with the corresponding value at which the N stops (exo 6.4):
 ```
-Riemann Integral of x^3 from 0 to 1: 0.997983, at N: 1414         <--- yes
-Riemann Integral of cos(x) from 0 to pi: 3, at N: 4               <--- no
-Riemann Integral of sin(x) from 0 to pi/2: 1.55031, at N: 141     <--- yes
+Riemann Integral of x^3 from 0 to 1: 0.240003, at N: 9900
+Riemann Integral of cos(x) from 0 to pi: 0, at N: 2
+Riemann Integral of sin(x) from 0 to pi/2: 0.990026, at N: 9938
 ```
-Probably on the second integral, the series steps `i` of one is too much, it should be lower to refine the convergence.
+It depends on the DeltaX which is dependent on the number of iterations (N). For example for N=50000
+```
+Riemann Integral of x^3 from 0 to 1: 0.240003, at N: 49494
+Riemann Integral of cos(x) from 0 to pi: 0, at N: 2
+Riemann Integral of sin(x) from 0 to pi/2: 0.990026, at N: 49684
+```

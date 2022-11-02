@@ -1,5 +1,7 @@
 #include "riemann_integral.hh"
 #include <iostream>
+#include <cmath>
+#include <limits>
 
 namespace SCPP
 {
@@ -10,13 +12,14 @@ namespace SCPP
     double RiemannIntegral::compute(unsigned int N)
     {
         double sum = 0.0;
-        double h = (m_b - m_a) / N;
+        double delta = (m_b - m_a) / N;
         CurrentIndex = 1;
-        for (unsigned int i = 1; sum < m_b; i++)
+
+        while (std::abs(m_ExpectedValue - CurrentValue) > 0.01)
         {
             CurrentValue = sum;
-            sum += m_f(m_a + i * h);
-            CurrentIndex = i;
+            sum += m_f(m_a + CurrentIndex * delta) * delta;
+            CurrentIndex++;
         }
         return CurrentValue;
     };
