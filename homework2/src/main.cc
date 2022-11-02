@@ -4,84 +4,65 @@
 #include <sstream>
 #include <fstream>
 
-#include "series.hh"
-#include "compute_arithmetic.hh"
-#include "compute_pi.hh"
-#include "print_series.hh"
-#include "write_series.hh"
+#include "riemann_integral.hh"
 
 int main(int argc, char** argv)
 {
     // Parse arguments
     std::stringstream convert;
 
-    if (argc != 7 ||
+    if (argc != 4 ||
         std::string(argv[1]) == "help" ||
         std::string(argv[1]) == "H" ||
         std::string(argv[0]) == "h")
     {
-        std::cout << "Usage: " << argv[0] << " <N> <series> <frequency> <maxiter> <printMode> <fileformat>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <N> <a> <b>" << std::endl;
         std::cout << "N: number of terms" << std::endl;
-        std::cout << "series: arithmetic or pi" << std::endl;
-        std::cout << "Frequency: step between two outputs" << std::endl;
-        std::cout << "Maxiter: capping for steps" << std::endl;
-        std::cout << "printMode: 0 to print on screen, 1 to print on file, 2 print and write on file" << std::endl;
-        std::cout << "separator: the format output file ',' = .csv, ' ' = .txt, '\t' = .txt, '|' = .psv" << std::endl;
+        std::cout << "a: lower bound, -1 for default" << std::endl;
+        std::cout << "b: upper bound, -1 for default" << std::endl;
         return 1;
     }
     
-    convert << argv[1] << " " << argv[2] << " " << argv[3] << " " << argv[4] << " " << argv[5] << " " << argv[6];
+    convert << argv[1] << " " << argv[2] << " " << argv[3];
     
-    unsigned int N;
-    std::string series;
-    double frequency;
-    double maxiter;
-    unsigned int printMode;
-    char separator;
+    unsigned int N = 0;
+    double a, b;
 
-    convert >> N >> series >> frequency >> maxiter >> printMode >> separator;
+    convert >> N >> a >> b;
 
-    // Allocate pointer but do not allocate memory
-    std::unique_ptr<SCPP::Series> s;
-
-    // Allocate memory and assign pointer
-    if (series == "arithmetic")
+    if (convert.fail())
     {
-        s = std::make_unique<SCPP::ComputeArithmetic>();
+        std::cout << "Error: invalid arguments" << std::endl;
+        return 1;
     }
-    else if (series == "pi")
+    if (N <= 0)
     {
-        s = std::make_unique<SCPP::ComputePi>();
-    }
-    else
-    {
-        std::cout << "Unknown series: " << series << std::endl;
+        std::cout << "N is null, 0 or negative integer" << std::endl;
         return 1;
     }
 
-    // Print series on screen or in file
-    std::ofstream os;
-    SCPP::PrintSeries printer(frequency, maxiter, *s);
-    SCPP::WriteSeries writer(frequency, maxiter, *s);
-    writer.SetSeparator(separator);
+    SCPP::RiemannIntegral riemann1(a, b, [](double x) { return x; });
 
-    if (printMode == 1)
+    if (a == -1 && b == -1)
     {
-        os << writer;
-    }
-    else if (printMode == 0)
-    {
-        std::cout << printer;
-    }
-    else if (printMode == 2)
-    {
-        os << writer;
-        std::cout << printer;
+        riemann1.setA(0);
+        riemann1.setB(1);
+        riemann1.setF([](double x) { return x * x * x; });
+        std::cout << "Riemann Integral of x^3 from 0 to 1: " << riemann1.compute(N) << ", at N: " << riemann1.CurrentIndex << std::endl;
+
+        riemann1.setA(0);
+        riemann1.setB(M_PI);
+        riemann1.setF([](double x) { return cos(x); });
+        std::cout << "Riemann Integral of cos(x) from 0 to pi: " << riemann1.compute(N) << ", at N: " << riemann1.CurrentIndex << std::endl;
+
+        riemann1.setA(0);
+        riemann1.setB(M_PI/2);
+        riemann1.setF([](double x) { return sin(x); });
+        std::cout << "Riemann Integral of sin(x) from 0 to pi/2: "  << riemann1.compute(N) << ", at N: " << riemann1.CurrentIndex << std::endl;
     }
     else
     {
-        std::cout << "Unknown print mode: " << printMode << std::endl;
-        return 1;
+        std::cout << "Custom Riemann Integral of x from " << a << " to " << b << " : " << riemann1.compute(N) << std::endl;
     }
 
     return 0;
