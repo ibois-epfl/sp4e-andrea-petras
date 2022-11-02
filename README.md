@@ -115,6 +115,8 @@ Usage: executuable <N> <series> <frequency> <maxiter> <printMode> <fileformat>
 ---
 ### Exercice 5: *Series complexity*
 
+#### 5.1: evaluation of global complexity
+
 To evaluate the global complexity of the program we define complexity first as:
 
 **(a)** cyclomatic complexity (complexity of code branching): to do so we use the static code analysis tool [OCLint](https://oclint.org/). To use it we set the command:
@@ -179,9 +181,30 @@ P1=0[0] P2=11[10] P3=23[20]
 ```
 </details>
 
-**(b)** computational complexity (algorithmic time complexity): to our knowledge there is no such tool that can easily provide such a metric (?). The command `$ time <exec>` can give us an indication of the execution time, but this is specific to a particular machine:
+**(b)** computational complexity (algorithmic time complexity): to our knowledge, there is no such tool that can easily provide such a metric (?). The command `$ time <exec>` can give us an indication of the execution time, but this is specific to a particular machine:
 ```
 real    0m0.001s    <--- wall colck time
 user    0m0.001s    <--- the amount of CPU time spent outside the kernel (in process)
 sys     0m0.000s    <--- the amount of CPU time spent inside the kernel (out process)
+```
+
+#### 5.2: refactoring to avoid re-computation of the entire series
+
+We factorized the code as much as possible to avoid the recomputation of the entire series if any child of `DumperSeries` needs to compute it. To make this possible we had to create a situation in the `main.cc` in which we would print and write and the same time. For this reason, we had a flag for `<print-mode>` to do both. We just modified one child of the `DumperSeries` class, the `PrintSeries` since `WriteSeries` class will always have to compute the series first. We still added a check there too in case the two objects would take another order in `main.cc`.
+
+> ⚠️ Note: we didn't find a way to avoid re-computation by changing the `Series` class directly as indicated in exo 5.3 point.
+
+To run the code:
+```bash
+$ '~/sp4e-andrea-petras/homework2/build/bin/Homework2' 200 pi 1 10 2 ","
+```
+For more options:
+```bash
+Usage: <exec-path> <N> <series> <frequency> <maxiter> <printMode> <fileformat>
+<N>: number of terms
+<series>: arithmetic or pi
+<Frequency>: step between two outputs
+<Maxiter>: capping for steps
+<printMode>: 0 to print on screen, 1 to print on file, 2 print and write on file
+<separator>: the format output file ',' = .csv, ' ' = .txt, '     ' = .txt, '|' = .psv
 ```
