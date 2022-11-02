@@ -212,10 +212,25 @@ Usage: <exec-path> <N> <series> <frequency> <maxiter> <printMode> <fileformat>
 ---
 
 ### Exercise 6: *Integral*
+To use the code with custom values of bounds `a` and `b`:
+```bash
+$ '~/sp4e-andrea-petras/homework2/build/bin/Homework2' 2000 1 10
+```
+
+To output the 3 integrals of exo 6.3 equations:
+
+```
+                                      pi            
+  _             _                   _ --            
+ /  1  3       /  pi               /   2            
+ |    x  d x,  |     cos (x) d x,  |     sin (x) d x
+_/  0         _/  0               _/  0             
+
+```
+Enter these flags:
+```bash
+$ '~/sp4e-andrea-petras/homework2/build/bin/Homework2' 2000 -1 -1
+```
 
 #### 6.4
-```
-Riemann Integral of x^3 from 0 to 1: 0.247506
-Riemann Integral of cos(x) from 0 to pi: 0.015708
-Riemann Integral of sin(x) from 0 to pi/2: 0.996068
-```
+Waiting for answer
