@@ -7,7 +7,6 @@ namespace SCPP
     {
     public:
         ComputeArithmetic() = default;
-        ~ComputeArithmetic() = default;
 
         double compute(unsigned int N) override;
     };

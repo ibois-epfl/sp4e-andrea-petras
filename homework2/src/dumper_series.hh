@@ -10,7 +10,7 @@ namespace SCPP
         DumperSeries(Series& series)
             : p_Series(series), p_Precision(4)
         {};
-        ~DumperSeries() = default;
+        virtual ~DumperSeries() = default;
 
         virtual void dump(std::ostream& os) = 0;
 

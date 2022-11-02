@@ -7,6 +7,9 @@ namespace SCPP
     class Series
     {
     public:
+        Series() = default;
+        virtual ~Series() = default;
+
         /// @brief compute the Nth term of the series
         /// @param N number of terms
         /// @return the result of the series as double

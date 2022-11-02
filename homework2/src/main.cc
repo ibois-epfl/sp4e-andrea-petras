@@ -15,7 +15,10 @@ int main(int argc, char** argv)
     // Parse arguments
     std::stringstream convert;
 
-    if (argc != 7 || std::string(argv[1]) == "help" || std::string(argv[1]) == "H" || std::string(argv[0]) == "h")
+    if (argc != 7 ||
+        std::string(argv[1]) == "help" ||
+        std::string(argv[1]) == "H" ||
+        std::string(argv[0]) == "h")
     {
         std::cout << "Usage: " << argv[0] << " <N> <series> <frequency> <maxiter> <printMode> <fileformat>" << std::endl;
         std::cout << "N: number of terms" << std::endl;
@@ -58,22 +61,22 @@ int main(int argc, char** argv)
 
     // Print series on screen or in file
     std::ofstream os;
-    SCPP::PrintSeries p(frequency, maxiter, *s);
-    SCPP::WriteSeries w(frequency, maxiter, *s);
-    w.SetSeparator(separator);
+    SCPP::PrintSeries printer(frequency, maxiter, *s);
+    SCPP::WriteSeries writer(frequency, maxiter, *s);
+    writer.SetSeparator(separator);
 
     if (printMode == 1)
     {
-        os << w;
+        os << writer;
     }
     else if (printMode == 0)
     {
-        std::cout << p;
+        std::cout << printer;
     }
     else if (printMode == 2)
     {
-        os << w;
-        std::cout << p;
+        os << writer;
+        std::cout << printer;
     }
     else
     {
