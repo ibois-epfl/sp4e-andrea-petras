@@ -114,3 +114,74 @@ Usage: executuable <N> <series> <frequency> <maxiter> <printMode> <fileformat>
 
 ---
 ### Exercice 5: *Series complexity*
+
+To evaluate the global complexity of the program we define complexity first as:
+
+**(a)** cyclomatic complexity (complexity of code branching): to do so we use the static code analysis tool [OCLint](https://oclint.org/). To use it we set the command:
+```bash
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON homework2/build/
+```
+Next:
+```bash
+$ oclint -p homework2/build/ homework2/src/*.cc homework2/src/*.hh
+```
+<details><summary>Here is the results print</summary>
+
+```bash
+Compiler Warnings:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/unique_ptr.h:85:2: delete called on 'SCPP::Series' that is abstract but has non-virtual destructor
+
+
+OCLint Report
+
+Summary: TotalFiles=11 FilesWithViolations=11 P1=0 P2=11 P3=23 
+
+/home/as/sp4e-andrea-petras/homework2/src/compute_arithmetic.cc:6:39: short variable name [naming|P3] Length of variable name `N` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/compute_pi.cc:6:31: short variable name [naming|P3] Length of variable name `N` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/compute_pi.cc:8:9: short variable name [naming|P3] Length of variable name `pi` is 2, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:18:1: long line [size|P3] Line with 114 characters exceeds limit of 100
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:20:1: long line [size|P3] Line with 121 characters exceeds limit of 100
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:26:1: long line [size|P3] Line with 118 characters exceeds limit of 100
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:30:1: long line [size|P3] Line with 113 characters exceeds limit of 100
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:32:5: short variable name [naming|P3] Length of variable name `N` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:42:5: short variable name [naming|P3] Length of variable name `s` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:60:5: short variable name [naming|P3] Length of variable name `os` is 2, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:61:5: short variable name [naming|P3] Length of variable name `p` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:62:5: short variable name [naming|P3] Length of variable name `w` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:13:1: long method [size|P3] Method with 62 lines exceeds limit of 50
+/home/as/sp4e-andrea-petras/homework2/src/main.cc:13:1: high ncss method [size|P2] Method of 37 non-commenting source statements exceeds limit of 30
+/home/as/sp4e-andrea-petras/homework2/src/print_series.cc:10:28: short variable name [naming|P3] Length of variable name `os` is 2, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/print_series.cc:10:5: avoid default arguments on virtual methods [design|P3] 
+/home/as/sp4e-andrea-petras/homework2/src/write_series.cc:11:28: short variable name [naming|P3] Length of variable name `os` is 2, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/compute_arithmetic.hh:6:5: destructor of virtual class [convention|P2] class ComputeArithmetic should have a virtual destructor ~ComputeArithmetic()
+/home/as/sp4e-andrea-petras/homework2/src/compute_arithmetic.hh:12:24: short variable name [naming|P3] Length of variable name `N` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/series.hh:7:5: base class destructor should be virtual or protected [convention|P2] ~Series() should be protected or virtual according to class ComputeArithmetic
+/home/as/sp4e-andrea-petras/homework2/src/compute_pi.hh:6:5: destructor of virtual class [convention|P2] class ComputePi should have a virtual destructor ~ComputePi()
+/home/as/sp4e-andrea-petras/homework2/src/compute_pi.hh:12:24: short variable name [naming|P3] Length of variable name `N` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/series.hh:7:5: base class destructor should be virtual or protected [convention|P2] ~Series() should be protected or virtual according to class ComputePi
+/home/as/sp4e-andrea-petras/homework2/src/dumper_series.hh:7:5: destructor of virtual class [convention|P2] class DumperSeries should have a virtual destructor ~DumperSeries()
+/home/as/sp4e-andrea-petras/homework2/src/dumper_series.hh:15:27: short variable name [naming|P3] Length of variable name `os` is 2, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/print_series.hh:10:5: destructor of virtual class [convention|P2] class PrintSeries should have a virtual destructor ~PrintSeries()
+/home/as/sp4e-andrea-petras/homework2/src/print_series.hh:20:27: short variable name [naming|P3] Length of variable name `os` is 2, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/print_series.hh:20:9: avoid default arguments on virtual methods [design|P3] 
+/home/as/sp4e-andrea-petras/homework2/src/dumper_series.hh:7:5: base class destructor should be virtual or protected [convention|P2] ~DumperSeries() should be protected or virtual according to class PrintSeries
+/home/as/sp4e-andrea-petras/homework2/src/series.hh:7:5: destructor of virtual class [convention|P2] class Series should have a virtual destructor ~Series()
+/home/as/sp4e-andrea-petras/homework2/src/series.hh:13:32: short variable name [naming|P3] Length of variable name `N` is 1, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/write_series.hh:11:5: destructor of virtual class [convention|P2] class WriteSeries should have a virtual destructor ~WriteSeries()
+/home/as/sp4e-andrea-petras/homework2/src/write_series.hh:21:27: short variable name [naming|P3] Length of variable name `os` is 2, which is shorter than the threshold of 3
+/home/as/sp4e-andrea-petras/homework2/src/dumper_series.hh:7:5: base class destructor should be virtual or protected [convention|P2] ~DumperSeries() should be protected or virtual according to class WriteSeries
+
+[OCLint (https://oclint.org) v22.02]
+
+oclint: error: violations exceed threshold
+P1=0[0] P2=11[10] P3=23[20] 
+```
+</details>
+
+**(b)** computational complexity (algorithmic time complexity): to our knowledge there is no such tool that can easily provide such a metric (?). The command `$ time <exec>` can give us an indication of the execution time, but this is specific to a particular machine:
+```
+real    0m0.001s    <--- wall colck time
+user    0m0.001s    <--- the amount of CPU time spent outside the kernel (in process)
+sys     0m0.000s    <--- the amount of CPU time spent inside the kernel (out process)
+```
