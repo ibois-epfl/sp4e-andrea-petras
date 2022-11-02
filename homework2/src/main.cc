@@ -48,17 +48,17 @@ int main(int argc, char** argv)
         riemann1.setA(0);
         riemann1.setB(1);
         riemann1.setF([](double x) { return x * x * x; });
-        std::cout << "Riemann Integral of x^3 from 0 to 1: " << riemann1.compute(N) << std::endl;
+        std::cout << "Riemann Integral of x^3 from 0 to 1: " << riemann1.compute(N) << ", at N: " << riemann1.CurrentIndex << std::endl;
 
         riemann1.setA(0);
         riemann1.setB(M_PI);
         riemann1.setF([](double x) { return cos(x); });
-        std::cout << "Riemann Integral of cos(x) from 0 to pi: " << riemann1.compute(N) << std::endl;
+        std::cout << "Riemann Integral of cos(x) from 0 to pi: " << riemann1.compute(N) << ", at N: " << riemann1.CurrentIndex << std::endl;
 
         riemann1.setA(0);
         riemann1.setB(M_PI/2);
         riemann1.setF([](double x) { return sin(x); });
-        std::cout << "Riemann Integral of sin(x) from 0 to pi/2: " << riemann1.compute(N) << std::endl;
+        std::cout << "Riemann Integral of sin(x) from 0 to pi/2: "  << riemann1.compute(N) << ", at N: " << riemann1.CurrentIndex << std::endl;
     }
     else
     {

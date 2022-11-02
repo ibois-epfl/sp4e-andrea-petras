@@ -231,6 +231,10 @@ Enter these flags:
 ```bash
 $ '~/sp4e-andrea-petras/homework2/build/bin/Homework2' 2000 -1 -1
 ```
-
-#### 6.4
-Waiting for answer
+and here are the results with the corresponding value at which the N stops (exo 6.4):
+```
+Riemann Integral of x^3 from 0 to 1: 0.997983, at N: 1414         <--- yes
+Riemann Integral of cos(x) from 0 to pi: 3, at N: 4               <--- no
+Riemann Integral of sin(x) from 0 to pi/2: 1.55031, at N: 141     <--- yes
+```
+Probably on the second integral, the series steps `i` of one is too much, it should be lower to refine the convergence.

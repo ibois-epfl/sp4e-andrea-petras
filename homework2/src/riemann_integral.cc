@@ -9,15 +9,15 @@ namespace SCPP
 
     double RiemannIntegral::compute(unsigned int N)
     {
-        double sum = 0;
+        double sum = 0.0;
         double h = (m_b - m_a) / N;
         CurrentIndex = 1;
-        for (unsigned int i = 0; i < N; i++)
+        for (unsigned int i = 1; sum < m_b; i++)
         {
+            CurrentValue = sum;
             sum += m_f(m_a + i * h);
             CurrentIndex = i;
         }
-        CurrentValue = sum * h;
         return CurrentValue;
     };
 }
