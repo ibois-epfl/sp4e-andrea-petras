@@ -77,7 +77,7 @@ Usage: 'executable-path' <N> <series>
 >       DumperSeries(Series& series)
 >           : p_Series(series)
 >       {};
->       ~DumperSeries() = default;>
+>       ~DumperSeries() = default;
 > 
 >       virtual void dump() = 0;>
 > 
@@ -184,7 +184,7 @@ P1=0[0] P2=11[10] P3=23[20]
 
 **(b)** computational complexity (algorithmic time complexity): to our knowledge, there is no such tool that can easily provide such a metric (?). The command `$ time <exec>` can give us an indication of the execution time, but this is specific to a particular machine:
 ```
-real    0m0.001s    <--- wall colck time
+real    0m0.001s    <--- wall clock time
 user    0m0.001s    <--- the amount of CPU time spent outside the kernel (in process)
 sys     0m0.000s    <--- the amount of CPU time spent inside the kernel (out process)
 ```
