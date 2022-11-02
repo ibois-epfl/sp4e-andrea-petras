@@ -15,14 +15,17 @@ int main(int argc, char** argv)
     // Parse arguments
     std::stringstream convert;
 
-    if (argc != 7 || std::string(argv[1]) == "help" || std::string(argv[1]) == "H" || std::string(argv[0]) == "h")
+    if (argc != 7 ||
+        std::string(argv[1]) == "help" ||
+        std::string(argv[1]) == "H" ||
+        std::string(argv[0]) == "h")
     {
         std::cout << "Usage: " << argv[0] << " <N> <series> <frequency> <maxiter> <printMode> <fileformat>" << std::endl;
         std::cout << "N: number of terms" << std::endl;
         std::cout << "series: arithmetic or pi" << std::endl;
         std::cout << "Frequency: step between two outputs" << std::endl;
         std::cout << "Maxiter: capping for steps" << std::endl;
-        std::cout << "printMode: 0 to print on screen, 1 to print on file" << std::endl;
+        std::cout << "printMode: 0 to print on screen, 1 to print on file, 2 print and write on file" << std::endl;
         std::cout << "separator: the format output file ',' = .csv, ' ' = .txt, '\t' = .txt, '|' = .psv" << std::endl;
         return 1;
     }
@@ -58,17 +61,27 @@ int main(int argc, char** argv)
 
     // Print series on screen or in file
     std::ofstream os;
-    SCPP::PrintSeries p(frequency, maxiter, *s);
-    SCPP::WriteSeries w(frequency, maxiter, *s);
-    w.SetSeparator(separator);
+    SCPP::PrintSeries printer(frequency, maxiter, *s);
+    SCPP::WriteSeries writer(frequency, maxiter, *s);
+    writer.SetSeparator(separator);
 
     if (printMode == 1)
     {
-        os << w;
+        os << writer;
+    }
+    else if (printMode == 0)
+    {
+        std::cout << printer;
+    }
+    else if (printMode == 2)
+    {
+        os << writer;
+        std::cout << printer;
     }
     else
     {
-        std::cout << p;
+        std::cout << "Unknown print mode: " << printMode << std::endl;
+        return 1;
     }
 
     return 0;
