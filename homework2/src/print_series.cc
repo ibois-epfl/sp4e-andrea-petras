@@ -20,9 +20,19 @@ namespace SCPP
             os << "Analytic prediction: " << p_Series.getAnalyticPrediction() << std::endl;
         }
 
-        for (double i = 0; i < Maxiter; i += Frequency)
+        if (p_Series.CurrentValue == 0.0 && p_Series.CurrentIndex != 1)
         {
-            os << "Term " << i << ": " << p_Series.compute(i) << std::endl;
+            os << "[INFO][PrintSeries.cc]: No computation done yet" << std::endl;
+
+            for (double i = 0; i < Maxiter; i += Frequency)
+            {
+                os << "Term " << i << ": " << p_Series.compute(i) << std::endl;
+            }
+        }
+        else
+        {
+            os << "[INFO][PrintSeries.cc]: Last computed term: " << p_Series.CurrentIndex << std::endl;
+            os << "[INFO][PrintSeries.cc]: Last computed value: " << p_Series.CurrentValue << std::endl;
         }
     };
 }
