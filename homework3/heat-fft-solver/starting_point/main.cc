@@ -12,6 +12,10 @@
 #include <iostream>
 #include <sstream>
 /* -------------------------------------------------------------------------- */
+#if __FFTW_MODULE_ACTIVE__
+  #include "fft.hh"
+#endif
+/* -------------------------------------------------------------------------- */
 
 int main(int argc, char** argv) {
   if (argc != 6) {

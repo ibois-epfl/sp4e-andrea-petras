@@ -4,6 +4,14 @@ project (Particles)
 
 set(CMAKE_CXX_STANDARD 14)
 
+
+################################################################
+# Options
+################################################################
+
+option(FFTW_MODULE "Use FFTW module" OFF)
+
+
 ################################################################
 # libpart
 ################################################################
@@ -35,8 +43,8 @@ add_library(part
 add_executable(particles main.cc)
 target_link_libraries(particles gtest_main gtest pthread part)
 
-if(EXISTS "${PROJECT_SOURCE_DIR}/googletest/CMakeLists.txt")
-  add_subdirectory(googletest)
+if(EXISTS "${PROJECT_SOURCE_DIR}/googletest_local/CMakeLists.txt")
+  add_subdirectory(googletest_local)
   add_executable(test_kepler test_kepler.cc)
   add_executable(test_fft test_fft.cc)
   target_link_libraries(test_kepler part gtest_main gtest pthread )
@@ -51,6 +59,35 @@ Did you forget `git submodule update --init`
 ")
   message(FATAL_ERROR "exit")
 endif()
+
+################################################################
+# FFTW
+################################################################
+
+if(FFTW_MODULE)
+    # target_compile_definitions(${PROJECT_NAME} PRIVATE __FFTW_MODULE_ACTIVE__=true) # TODO: maybe not needed
+    
+    # find_package(FFTW REQUIRED)
+    # message(STATUS "FFTW_INCLUDES: ${FFTW_INCLUDES}")
+    # message(STATUS "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
+    # target_link_libraries(${PROJECT_NAME} ${FFTW_LIBRARIES})
+    set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib")
+
+    # add library files
+    find_library(FFTW_LIBRARIES NAMES libfftw3 PATHS ${FFTW_LIBRARIES_PATH})
+    message(STATUS "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
+    
+
+    # add library headers
+    set(FFTW_INCLUDES_PATH CACHE PATH "/usr/include")
+    find_path(FFTW_INCLUDES NAMES fftw3.h PATHS ${FFTW_INCLUDES_PATH})
+    message(STATUS "FFTW_INCLUDES: ${FFTW_INCLUDES}")
+    # target_include_directories(${PROJECT_NAME} PUBLIC ${FFTW_INCLUDES})
+
+    # target_link_libraries(${PROJECT_NAME} ${FFTW_LIBRARIES})
+
+endif()
+
 ################################################################
 # Doxygen
 ################################################################
