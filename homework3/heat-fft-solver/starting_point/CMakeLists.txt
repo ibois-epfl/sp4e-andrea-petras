@@ -71,20 +71,19 @@ if(FFTW_MODULE)
     # message(STATUS "FFTW_INCLUDES: ${FFTW_INCLUDES}")
     # message(STATUS "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
     # target_link_libraries(${PROJECT_NAME} ${FFTW_LIBRARIES})
-    set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib")
+    set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib/")
 
     # add library files
     find_library(FFTW_LIBRARIES NAMES libfftw3 PATHS ${FFTW_LIBRARIES_PATH})
     message(STATUS "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
-    
+    target_link_libraries(particles ${FFTW_LIBRARIES})
 
     # add library headers
-    set(FFTW_INCLUDES_PATH CACHE PATH "/usr/include")
+    set(FFTW_INCLUDES_PATH CACHE PATH "/usr/include/")
     find_path(FFTW_INCLUDES NAMES fftw3.h PATHS ${FFTW_INCLUDES_PATH})
     message(STATUS "FFTW_INCLUDES: ${FFTW_INCLUDES}")
-    # target_include_directories(${PROJECT_NAME} PUBLIC ${FFTW_INCLUDES})
+    target_include_directories(particles PUBLIC ${FFTW_INCLUDES})
 
-    # target_link_libraries(${PROJECT_NAME} ${FFTW_LIBRARIES})
 
 endif()
 
