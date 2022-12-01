@@ -65,11 +65,11 @@ endif()
 ################################################################
 
 if(FFTW_MODULE)
+    # add precompiled variable
     target_compile_definitions(particles PRIVATE __FFTW_MODULE_ACTIVE__=true)
     
-    set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib/")
-
     # add library files
+    set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib/")
     find_library(FFTW_LIBRARIES NAMES libfftw3 PATHS ${FFTW_LIBRARIES_PATH})
     message(STATUS "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
     target_link_libraries(particles ${FFTW_LIBRARIES})
