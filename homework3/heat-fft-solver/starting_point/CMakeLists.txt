@@ -65,12 +65,8 @@ endif()
 ################################################################
 
 if(FFTW_MODULE)
-    # target_compile_definitions(${PROJECT_NAME} PRIVATE __FFTW_MODULE_ACTIVE__=true) # TODO: maybe not needed
+    target_compile_definitions(particles PRIVATE __FFTW_MODULE_ACTIVE__=true)
     
-    # find_package(FFTW REQUIRED)
-    # message(STATUS "FFTW_INCLUDES: ${FFTW_INCLUDES}")
-    # message(STATUS "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
-    # target_link_libraries(${PROJECT_NAME} ${FFTW_LIBRARIES})
     set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib/")
 
     # add library files
