@@ -1,5 +1,7 @@
 
 ## --------------------->> C++/CMake <<---------------------
+## ! temp solution for Petras NAdrea's compatibility ! ## (problems with library finding, maybe vm?)
+./homework3/heat-fft-solver/starting_point/CMakeLists.txt
 
 ## Local build
 homework2/build/
