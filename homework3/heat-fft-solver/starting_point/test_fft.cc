@@ -8,7 +8,8 @@ TEST(FFT, transform) {
   Matrix<complex> m(N);
 
   Real k = 2 * M_PI / N;
-  for (auto&& entry : index(m)) {
+  for (auto&& entry : index(m))
+  {
     int i = std::get<0>(entry);
     int j = std::get<1>(entry);
     auto& val = std::get<2>(entry);
@@ -17,7 +18,8 @@ TEST(FFT, transform) {
 
   Matrix<complex> res = FFT::transform(m);
 
-  for (auto&& entry : index(res)) {
+  for (auto&& entry : index(res))
+  {
     int i = std::get<0>(entry);
     int j = std::get<1>(entry);
     auto& val = std::get<2>(entry);
