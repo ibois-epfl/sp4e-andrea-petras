@@ -29,6 +29,12 @@ inline Matrix<complex> FFT::transform(Matrix<complex>& m_in)
 
 inline Matrix<complex> FFT::itransform(Matrix<complex>& m_in)
 {
+  Matrix<complex> m_out(m_in.size());
+  fftw_plan plan = fftw_plan_dft_2d(m_in.size(), m_in.size(), (fftw_complex*)m_in.data(), (fftw_complex*)m_out.data(), FFTW_BACKWARD, FFTW_ESTIMATE);
+  fftw_execute(plan);
+  fftw_destroy_plan(plan);
+  m_out /= m_in.size() * m_in.size();
+  return m_out;
 }
 
 /* ------------------------------------------------------ */
