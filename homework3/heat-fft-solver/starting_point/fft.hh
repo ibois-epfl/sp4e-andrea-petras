@@ -56,7 +56,6 @@ inline Matrix<std::complex<int>> FFT::computeFrequencies(int size) {
     val = std::complex<int>(i, j);
   }
   return m;
-
 }
 
 #endif  // FFT_HH
