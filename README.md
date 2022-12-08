@@ -16,3 +16,8 @@ To run the code:
 ```bash
 '/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/build/test_fft'
 ```
+
+The result of `ldd <your-executable>`:
+```bash
+
+```

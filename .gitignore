@@ -1,6 +1,9 @@
 
 ## --------------------->> C++/CMake <<---------------------
 
+## ! CMake problem with Petras, each one of us will have one for development ! ##
+*.CMakeLists.txt
+
 ## Local build
 homework2/build/
 homework2/build/**/*
