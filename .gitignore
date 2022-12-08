@@ -54,3 +54,4 @@ docs/**/*
 series.txt
 series.csv
 series.psv
+homework3/heat-fft-solver/starting_point/CMakeLists.txt

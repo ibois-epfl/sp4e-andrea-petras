@@ -64,3 +64,44 @@ TEST(FFT, inverse_transform)
   }
 }
 /*****************************************************************/
+TEST(FFT, frequencies)
+{
+  UInt N = 512;
+  Matrix<std::complex<int>> m(N);
+
+  // implement the numpy.fft.fftfreq function
+  // https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fftfreq.html
+  std::vector<int> freqs;
+  if (N % 2 == 0)
+  {
+      for (int i = 0; i < N; i++)
+      {
+          if (i <= N / 2)
+              freqs.push_back(i);
+          else
+              freqs.push_back(i - N);
+      }
+  }
+  else
+  {
+      for (int i = 0; i < N; i++)
+      {
+          if (i <= N / 2)
+              freqs.push_back(i);
+          else
+              freqs.push_back(i - N);
+      }
+  }
+
+  Matrix<std::complex<int>> res = FFT::computeFrequencies(N);
+
+  for (auto&& entry : index(res))
+  {
+    int i = std::get<0>(entry);
+    int j = std::get<1>(entry);
+    auto& val = std::get<2>(entry);
+
+    ASSERT_NEAR(val.real(), freqs[i], 1e-10);
+    ASSERT_NEAR(val.imag(), freqs[j], 1e-10);
+  }
+}

@@ -48,7 +48,7 @@ if(EXISTS "${PROJECT_SOURCE_DIR}/googletest_local/CMakeLists.txt")
   add_executable(test_kepler test_kepler.cc)
   add_executable(test_fft test_fft.cc)
   target_link_libraries(test_kepler part gtest_main gtest pthread )
-  target_link_libraries(test_fft part gtest_main gtest pthread ${FFTW_LIBRARIES})
+  target_link_libraries(test_fft part gtest_main gtest pthread )
   add_custom_target(test ./test_kepler && ./test_fft DEPENDS part test_kepler test_fft)
 else()
   message("
@@ -65,20 +65,26 @@ endif()
 ################################################################
 
 if(FFTW_MODULE)
-    # add precompiled variable
-    target_compile_definitions(particles PRIVATE __FFTW_MODULE_ACTIVE__=true)
+        # add precompiled variable
+        target_compile_definitions(particles PRIVATE __FFTW_MODULE_ACTIVE__=true)
     
-    # add library files
-    set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib/")
-    find_library(FFTW_LIBRARIES NAMES libfftw3 PATHS ${FFTW_LIBRARIES_PATH})
-    message(STATUS "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
-    target_link_libraries(particles ${FFTW_LIBRARIES})
-
-    # add library headers
-    set(FFTW_INCLUDES_PATH CACHE PATH "/usr/include/")
-    find_path(FFTW_INCLUDES NAMES fftw3.h PATHS ${FFTW_INCLUDES_PATH})
-    message(STATUS "FFTW_INCLUDES: ${FFTW_INCLUDES}")
-    target_include_directories(particles PUBLIC ${FFTW_INCLUDES})
+        # add library files
+        #set(FFTW_LIBRARIES_PATH CACHE PATH "/usr/lib/")
+    
+        #message(WARNING "FFTW_LIBRARIES_PATH:" ${FFTW_LIBRARIES_PATH})
+        #find_library(FFTW_LIBRARIES NAMES libfftw3 PATHS ${FFTW_LIBRARIES_PATH})
+        #message(WARNING "FFTW_LIBRARIES_PATH: ${FFTW_LIBRARIES_PATH}")
+        #message(WARNING "FFTW_LIBRARIES: ${FFTW_LIBRARIES}")
+        #target_link_libraries(particles ${FFTW_LIBRARIES})
+        target_link_libraries(particles /usr/lib/x86_64-linux-gnu/libfftw3.so)
+    
+        # add library headers
+        #set(FFTW_INCLUDES_PATH CACHE PATH "/usr/include/")
+        #find_path(FFTW_INCLUDES NAMES fftw3.h PATHS ${FFTW_INCLUDES_PATH})
+        #message(WARNING "FFTW_INCLUDES: ${FFTW_INCLUDES}")
+        #target_include_directories(particles PUBLIC ${FFTW_INCLUDES})
+        target_include_directories(particles PUBLIC /usr/include/)
+        target_link_libraries(test_fft /usr/lib/x86_64-linux-gnu/libfftw3.so)
 endif()
 
 ################################################################
