@@ -79,8 +79,6 @@ if(FFTW_MODULE)
     find_path(FFTW_INCLUDES NAMES fftw3.h PATHS ${FFTW_INCLUDES_PATH})
     message(STATUS "FFTW_INCLUDES: ${FFTW_INCLUDES}")
     target_include_directories(particles PUBLIC ${FFTW_INCLUDES})
-
-
 endif()
 
 ################################################################
