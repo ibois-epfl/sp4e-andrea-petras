@@ -4,16 +4,6 @@
 ---
 ## Exercice 1
 
-<!-- ### In MaterialPoint class:
-Particle is the parent of this class. This class add extra properties and related getters.
-<p align="center"> <img src="./homework3/heat-fft-solver/starting_point/img/Screenshot from 2022-12-08 15-53-31.png" height="300"> </p>
-
-### Matrix class:
-This is a only header class regrouping all utility structs and methods for matrix calculations. Given that this structs implement all templates, particles can also be stored inside.
-
-### MaterialPointsFactory:
-The MaterialPointsFactory is in charge of creating  -->
-
 `MaterialPoint` is a child of the `Particle` with two extra properties and getters. The `MaterialPointFactory` inherits from the interface `ParticleFactoryInterface`. It is implemented as a singleton pattern so that by calling the `ParticlesFactoryInterface::getInstance().creatParticle()` we can create particles when we parse file. `MaterialPointFactory` has another important function for the particles which is `CreateSimulat`ion(..) it creates the `SystemEvolution` that contains `System` which this last one contains all the particle objects.
 
 `FFT` uses the matrices structs contained in `matrix.hh` for calculations.
