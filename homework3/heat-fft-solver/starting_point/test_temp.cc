@@ -75,7 +75,7 @@ TEST_F(TempTest, constant)
 }
 
 /*****************************************************************/
-TEST_F(TempTest, volumetric)
+TEST_F(TempTest, sinusoidal)
 {
     // set the temperature properties
     uint nSteps = 20;
@@ -94,14 +94,12 @@ TEST_F(TempTest, volumetric)
     for (uint i = 0; i < nSteps; i++)
     {
         this->ctemp->compute(sys);
-        
+
         for (auto& mp : mpoints)
         {
             Real x = mp->getPosition()[0];
             Real T = mp->getTemperature();
             Real gtT = sin(2 * M_PI * x / LdomSize);
-            // std::cout << "T = " << T << std::endl;
-            // std::cout << "gtT = " << gtT << std::endl;
             ASSERT_NEAR(T, gtT, 1e-10);
         }
     }
