@@ -21,8 +21,8 @@ protected:
       {
         // implement linear distribution of mpoints
         std::shared_ptr<MaterialPoint> mp = std::make_shared<MaterialPoint>();
-        Real x = LdomSize * ((i * LdomSize / Nmpoints) - 0.5);
-        Real y = LdomSize * ((j * LdomSize / Nmpoints) - 0.5);
+        Real x = LdomSize * ((i+0.5) / Nmpoints - 0.5);  ///< [-1,1] x [-1,1]
+        Real y = LdomSize * ((j+0.5) / Nmpoints - 0.5);  ///< [-1,1] x [-1,1]
         mp->getPosition()[0] = x;
         mp->getPosition()[1] = y;
 
@@ -42,7 +42,7 @@ protected:
 protected:
     System sys;
     uint Nmpoints = 15*15;
-    Real LdomSize = 1.0;
+    Real LdomSize = 2.0;  ///< [-1,1] x [-1,1]
     std::vector<std::shared_ptr<MaterialPoint>> mpoints;
     std::unique_ptr<ComputeTemperature> ctemp;
 };
@@ -89,7 +89,7 @@ TEST_F(TempTest, volumetric)
         this->sys.addParticle(mp);
     }
 
-    // heat flux
+    // heat flux should follow the volumetric heat source
     for (uint i = 0; i < nSteps; i++)
     {
         this->ctemp->compute(sys);
@@ -97,7 +97,12 @@ TEST_F(TempTest, volumetric)
         {
             Real x = mp->getPosition()[0];
             Real T = mp->getTemperature();
-            ASSERT_NEAR(T, sin(2 * M_PI * x / LdomSize), 1e-10);
+            Real gtT = sin(2 * M_PI * x / LdomSize);
+            std::cout << "T = " << T << std::endl;
+            std::cout << "gtT = " << gtT << std::endl;
+            ASSERT_NEAR(T, gtT, 1e-10);
         }
     }
 }
+
+/*****************************************************************/
