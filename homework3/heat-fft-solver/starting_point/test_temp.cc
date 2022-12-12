@@ -62,7 +62,7 @@ TEST_F(TempTest, constant)
         this->sys.addParticle(mp);
     }
 
-    // temp should be constant
+    // compute and test temp
     for (uint i = 0; i < nSteps; i++)
     {
         this->ctemp->compute(sys);
@@ -90,7 +90,7 @@ TEST_F(TempTest, sinusoidal)
         this->sys.addParticle(mp);
     }
 
-    // heat flux should follow the volumetric heat source
+    // compute and test temp
     for (uint i = 0; i < nSteps; i++)
     {
         this->ctemp->compute(sys);
@@ -106,3 +106,49 @@ TEST_F(TempTest, sinusoidal)
 }
 
 /*****************************************************************/
+TEST_F(TempTest, volumetric)
+{
+    // set steps
+    uint nSteps = 20;
+
+    // feed particles to the system
+    for (auto& mp : mpoints)
+    {
+        // implement volumetric distribution of temperature
+        Real x = mp->getPosition()[0];
+        Real y = mp->getPosition()[1];
+
+        // Exo 4.3
+        if (x == (1/2)) mp->setHeatRate(1.0);
+        else if (x == (-1/2)) mp->setHeatRate(-1.0);
+        else mp->setHeatRate(0.0);
+
+        // Exo 4.4
+        if (x <= -(1/2)) mp->setTemperature(-x-1.0);
+        else if (x > -(1/2) && x <= (1/2)) mp->setTemperature(x);
+        else if (x > (1/2)) mp->setTemperature(-x+1.0);
+
+        this->sys.addParticle(mp);
+    }
+
+    // compute and test temp
+    for (uint i = 0; i < nSteps; i++)
+    {
+        this->ctemp->compute(sys);
+
+        for (auto& mp : mpoints)
+        {
+            Real x = mp->getPosition()[0];
+            Real y = mp->getPosition()[1];
+            Real T = mp->getTemperature();
+
+            Real gtT = 0.0;
+
+            if (x <= -(1/2)) gtT = -x-1.0;
+            else if (x > -(1/2) && x <= (1/2)) gtT = x;
+            else if (x > (1/2)) gtT = -x+1.0;
+
+            ASSERT_NEAR(T, gtT, 1e-10);
+        }
+    }
+}
