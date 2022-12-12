@@ -17,6 +17,9 @@ public:
 
   Real & getTemperature(){return temperature;};
   Real & getHeatRate(){return heat_rate;};
+
+  void setTemperature(Real _temperature){temperature = _temperature;};
+  void setHeatRate(Real _heat_rate){heat_rate = _heat_rate;};
   
 private:
   Real temperature;
