@@ -72,3 +72,32 @@ TEST_F(TempTest, constant)
         }
     }
 }
+
+/*****************************************************************/
+TEST_F(TempTest, volumetric)
+{
+    // set the temperature properties
+    uint nSteps = 100;
+
+    // feed particles to the system
+    for (auto& mp : mpoints)
+    {
+        // implement sinusoidal distribution of temperature
+        Real x = mp->getPosition()[0];
+        mp->setTemperature(sin(2 * M_PI * x / LdomSize));  ///< ref (1) consigne
+        mp->setHeatRate(((2 * M_PI) / LdomSize) * sin((2 * M_PI * x) / LdomSize));  ///< ref (2) consigne
+        this->sys.addParticle(mp);
+    }
+
+    // heat flux
+    for (uint i = 0; i < nSteps; i++)
+    {
+        this->ctemp->compute(sys);
+        for (auto& mp : mpoints)
+        {
+            Real x = mp->getPosition()[0];
+            Real T = mp->getTemperature();
+            ASSERT_NEAR(T, sin(2 * M_PI * x / LdomSize), 1e-10);
+        }
+    }
+}
