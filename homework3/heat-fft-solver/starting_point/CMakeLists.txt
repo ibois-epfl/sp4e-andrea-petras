@@ -47,9 +47,11 @@ if(EXISTS "${PROJECT_SOURCE_DIR}/googletest_local/CMakeLists.txt")
   add_subdirectory(googletest_local)
   add_executable(test_kepler test_kepler.cc)
   add_executable(test_fft test_fft.cc)
+  add_executable(test_temp test_temp.cc)
   target_link_libraries(test_kepler part gtest_main gtest pthread )
   target_link_libraries(test_fft part gtest_main gtest pthread )
-  add_custom_target(test ./test_kepler && ./test_fft DEPENDS part test_kepler test_fft)
+  target_link_libraries(test_temp part gtest_main gtest pthread )
+  add_custom_target(test ./test_kepler && ./test_fft && ./test_temp DEPENDS part test_kepler test_fft test_temp)
 else()
   message("
 *********************************************
@@ -85,6 +87,7 @@ if(FFTW_MODULE)
         #target_include_directories(particles PUBLIC ${FFTW_INCLUDES})
         target_include_directories(particles PUBLIC /usr/include/)
         target_link_libraries(test_fft /usr/lib/x86_64-linux-gnu/libfftw3.so)
+        # target_link_directories(test_fft PUBLIC /usr/lib/x86_64-linux-gnu/)
 endif()
 
 ################################################################
