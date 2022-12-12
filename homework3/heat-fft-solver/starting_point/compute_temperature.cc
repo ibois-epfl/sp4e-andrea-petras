@@ -13,13 +13,13 @@ void ComputeTemperature::compute(System& system)
     // hv is the volumetric heat source, and theta is unkown and it is the temperature.
 
     // (a) Set the parameters
-    uint N = system.getNbParticles();
-    uint side = std::sqrt(N);
+    uint N = std::sqrt(system.getNbParticles());
 
-    Matrix<complex> mIn(side);
-    Matrix<complex> mOut(side);
-    Matrix<complex> hvIn(side);
-    Matrix<complex> hvOut(side);
+    Matrix<complex> mIn(N);
+    Matrix<complex> mOut(N);
+    Matrix<complex> hvIn(N);
+    Matrix<complex> hvOut(N);
+
     Matrix<complex> interimThetaA(N);
     Matrix<complex> interimTheta;  ///< interimTheta = (rho*C)/(kappa*dt)
 
@@ -32,8 +32,8 @@ void ComputeTemperature::compute(System& system)
         complex& val = std::get<2>(entry);
 
         // get the temperature and the heat source
-        mIn(i, j) = static_cast<MaterialPoint&>(system.getParticle(i * side + j)).getTemperature();
-        hvIn(i, j) = static_cast<MaterialPoint&>(system.getParticle(i * side + j)).getHeatRate();
+        mIn(i, j) = static_cast<MaterialPoint&>(system.getParticle(i * N + j)).getTemperature();
+        hvIn(i, j) = static_cast<MaterialPoint&>(system.getParticle(i * N + j)).getHeatRate();
     }
 
     // (c) Perform the Fourier transform
@@ -52,6 +52,7 @@ void ComputeTemperature::compute(System& system)
                                   - this->m_HeatConductivity * mOut(i, j)*q);
         }
     }
+
     // (e) Invert transform
     interimTheta = FFT::itransform(interimThetaA);
 
@@ -61,7 +62,7 @@ void ComputeTemperature::compute(System& system)
         int i, j;
         i = std::get<0>(entry);
         j = std::get<1>(entry);
-        static_cast<MaterialPoint&>( system.getParticle(i * side + j)).getTemperature() 
+        static_cast<MaterialPoint&>(system.getParticle(i * N + j)).getTemperature() 
             += this->m_DomSize * interimTheta(i,j).real();
     }
 }
