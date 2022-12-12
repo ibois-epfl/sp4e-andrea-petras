@@ -87,6 +87,7 @@ if(FFTW_MODULE)
         #target_include_directories(particles PUBLIC ${FFTW_INCLUDES})
         target_include_directories(particles PUBLIC /usr/include/)
         target_link_libraries(test_fft /usr/lib/x86_64-linux-gnu/libfftw3.so)
+        target_link_libraries(test_temp /usr/lib/x86_64-linux-gnu/libfftw3.so)
         # target_link_directories(test_fft PUBLIC /usr/lib/x86_64-linux-gnu/)
 endif()
 

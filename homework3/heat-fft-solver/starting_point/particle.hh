@@ -25,6 +25,17 @@ public:
   //! Get velocity
   Vector& getVelocity() { return velocity; }
 
+  // Mutators
+public:
+  //! Set mass
+  void setMass(Real _mass) { mass = _mass; }
+  //! Set position
+  void setPosition(Vector _position) { position = _position; }
+  //! Set force
+  void setForce(Vector _force) { force = _force; }
+  //! Set velocity
+  void setVelocity(Vector _velocity) { velocity = _velocity; }
+
   // I/O functions
 public:
   /// function to print the content of the class
