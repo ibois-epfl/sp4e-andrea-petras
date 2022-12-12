@@ -4,7 +4,7 @@
 
 # for exe pyinstaller: install "conda install pywin32" on win machine
 
-name: homework3
+name: sp4e-homework3
 channels:
     - conda-forge
 dependencies:

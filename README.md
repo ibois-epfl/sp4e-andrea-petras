@@ -90,7 +90,31 @@ To test the boundary conditions of the material particle we propose the followin
 * (b) the rest it plays in the `ComputeTemperature::compute()` function where: (b.1) at the beginning we test the boundary condition of the particle and set the its flag to `true`; (b.2) at the end of the function we read the flag and set the temperature of the particle to 0 if `true`.
 
 ### Configure and run
+To run the python file to generate the `.csv` data:
+```bash
+$ cd /sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/python
+$ conda env create -f environment.yml
+$ conda activate sp4e-homework3
+$ python '/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/python/generate_heat_distribution.py'
+```
+Everything is set by default but if you want to change parameters:
+```bash
+usage: generate_heat_distribution.py [-h] [-r R] [-x X X] [-y Y Y] [-cx CX] [-cy CY] [--display] [-f F]
+
+Generate heat distribution in CSV file, user must input the radius and domain
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -r R        radius of the heat distribution
+  -x X X      x-domain, write two number <min,max>
+  -y Y Y      y-domain, write two number <min,max>
+  -cx CX      number of points in x-direction
+  -cy CY      number of points in y-direction
+  --display   display the values using the matplotlib
+  -f F        output file name, user must add .csv ending
+```
+
 To run the code:
 ```bash
-'/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/build/particles' 100 20 '/home/as/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/heat_distribution.csv' material_point  3
+$ '/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/build/particles' 100 20 '/home/as/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/heat_distribution.csv' material_point  3
 ```
