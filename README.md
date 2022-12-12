@@ -88,3 +88,9 @@ gtT evaluates to -0.013333333333333308, and
 To test the boundary conditions of the material particle we propose the followin:
 * (a) we set a member variable and setter for the `MaterialPoint` class named `isBoundary`. A simple bool flag.
 * (b) the rest it plays in the `ComputeTemperature::compute()` function where: (b.1) at the beginning we test the boundary condition of the particle and set the its flag to `true`; (b.2) at the end of the function we read the flag and set the temperature of the particle to 0 if `true`.
+
+### Configure and run
+To run the code:
+```bash
+'/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/build/particles' 100 20 '/home/as/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/heat_distribution.csv' material_point  3
+```
