@@ -42,7 +42,7 @@ for `ldd` (printing shared libraries dependencies):
 The test is running without problems but we cannot see the shared library in the output of `ldd`. *We cannot figure out why*.
 
 ---
-## Exercice 4
+## Exercice 4.1-4
 ### Configure and run
 To run the testing for the temperature compute:
 ```bash
@@ -80,5 +80,11 @@ gtT evaluates to -0.013333333333333308, and
 [  FAILED  ] TempTest.sinusoidal
 [  FAILED  ] TempTest.volumetric
 
- 2 FAILED TESTS
+ 2 FAILED TEST
 ```
+
+---
+## Exercice 4.5
+To test the boundary conditions of the material particle we propose the followin:
+* (a) we set a member variable and setter for the `MaterialPoint` class named `isBoundary`. A simple bool flag.
+* (b) the rest it plays in the `ComputeTemperature::compute()` function where: (b.1) at the beginning we test the boundary condition of the particle and set the its flag to `true`; (b.2) at the end of the function we read the flag and set the temperature of the particle to 0 if `true`.

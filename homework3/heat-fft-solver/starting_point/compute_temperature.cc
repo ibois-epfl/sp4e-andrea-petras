@@ -34,6 +34,12 @@ void ComputeTemperature::compute(System& system)
         // get the temperature and the heat source
         mIn(i, j) = static_cast<MaterialPoint&>(system.getParticle(i * N + j)).getTemperature();
         hvIn(i, j) = static_cast<MaterialPoint&>(system.getParticle(i * N + j)).getHeatRate();
+
+        // check for particles on the boundary conditions of temperature
+        if (i == 0 || i == N - 1 || j == 0 || j == N - 1)
+        {
+            static_cast<MaterialPoint&>(system.getParticle(i * N + j)).setBoundary(true);
+        }
     }
 
     // (c) Perform the Fourier transform
@@ -62,8 +68,17 @@ void ComputeTemperature::compute(System& system)
         int i, j;
         i = std::get<0>(entry);
         j = std::get<1>(entry);
-        static_cast<MaterialPoint&>(system.getParticle(i * N + j)).getTemperature() 
+        auto& mp = static_cast<MaterialPoint&>(system.getParticle(i * N + j));
+        if (mp.isAtBoundary())
+        {
+            mp.setTemperature(0.0);
+        }
+        else
+        {
+            mp.getTemperature() 
             += this->m_DomSize * interimTheta(i,j).real();
+        }
+        
     }
 }
 /* -------------------------------------------------------------------------- */
