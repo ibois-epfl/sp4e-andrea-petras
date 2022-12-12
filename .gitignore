@@ -5,8 +5,7 @@
 
 ## ! CMake problem with Petras, each one of us will have one for development ! ##
 *.CMakeLists.txt
-*.yml
-*.csv
+
 
 ## Local build
 homework2/build/
