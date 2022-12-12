@@ -66,6 +66,7 @@ TEST_F(TempTest, constant)
     for (uint i = 0; i < nSteps; i++)
     {
         this->ctemp->compute(sys);
+
         for (auto& mp : mpoints)
         {
             ASSERT_NEAR(mp->getTemperature(), T0, 1e-10);
@@ -77,15 +78,15 @@ TEST_F(TempTest, constant)
 TEST_F(TempTest, volumetric)
 {
     // set the temperature properties
-    uint nSteps = 100;
+    uint nSteps = 20;
 
     // feed particles to the system
     for (auto& mp : mpoints)
     {
         // implement sinusoidal distribution of temperature
         Real x = mp->getPosition()[0];
-        mp->setTemperature(sin(2 * M_PI * x / LdomSize));  ///< ref (1) consigne
-        mp->setHeatRate(((2 * M_PI) / LdomSize) * sin((2 * M_PI * x) / LdomSize));  ///< ref (2) consigne
+        mp->setTemperature(sin(2 * M_PI * x / LdomSize));  ///< ref (1) consigne exo3
+        mp->setHeatRate(pow(((2 * M_PI) / LdomSize), 2) * sin((2 * M_PI * x) / LdomSize));  ///< ref (2) consigne exo3
         this->sys.addParticle(mp);
     }
 
@@ -93,13 +94,14 @@ TEST_F(TempTest, volumetric)
     for (uint i = 0; i < nSteps; i++)
     {
         this->ctemp->compute(sys);
+        
         for (auto& mp : mpoints)
         {
             Real x = mp->getPosition()[0];
             Real T = mp->getTemperature();
             Real gtT = sin(2 * M_PI * x / LdomSize);
-            std::cout << "T = " << T << std::endl;
-            std::cout << "gtT = " << gtT << std::endl;
+            // std::cout << "T = " << T << std::endl;
+            // std::cout << "gtT = " << gtT << std::endl;
             ASSERT_NEAR(T, gtT, 1e-10);
         }
     }
