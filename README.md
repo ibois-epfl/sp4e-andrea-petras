@@ -1,5 +1,4 @@
-# Exercice 11
-///
+# Homework3
 
 ---
 ## Exercice 1
@@ -116,5 +115,10 @@ optional arguments:
 
 To run the code:
 ```bash
+<<<<<<< HEAD
 $ '/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/build/particles' 100 20 '/home/as/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/heat_distribution.csv' material_point  3
 ```
+=======
+'/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/build/particles' 100 20 '/home/as/sp4e-andrea-petras/homework3/heat-fft-solver/starting_point/heat_distribution.csv' material_point  3
+```
+>>>>>>> eac82bfd470f6dcd01da4313117df71313a5f155
