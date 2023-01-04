@@ -47,6 +47,32 @@ def readPositions(planet_name : str = "mercury",
 
     return positions_np
 
+def computeError(positions : np.ndarray,
+                 postiions_ref : np.ndarray) -> float:
+    """
+        Function that computes the error between the computed positions and the reference positions.
+
+        Parameters
+        ----------
+        positions : np.ndarray
+            Numpy array with the computed positions.
+        postiions_ref : np.ndarray
+            Numpy array with the reference positions.
+        
+        Returns
+        -------
+        float
+            The error between the computed positions and the reference positions.
+    """
+    # compute the error
+    error = 0
+    for i in range(365):
+        for j in range(3):
+            error += (positions[i][j] - postiions_ref[i][j])**2
+    error = np.sqrt(error)
+
+    return error
+
 
 def main() -> None:
     positions = readPositions()
