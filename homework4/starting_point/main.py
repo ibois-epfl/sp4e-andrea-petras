@@ -70,10 +70,11 @@ def main(nsteps, freq, filename, particle_type, timestep):
     dumper = CsvWriter("out.csv")
     dumper.write(evol.getSystem())
 
-    # create a dumps folder in build dir if it does not exit
+    # create a dumps folder source code directory
     current_dir = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(current_dir)
     dumps_dir = os.path.join(current_dir, "dumps")
-    if not os.path.exists(dumps_dir):
+    if not os.path.exists("dumps"):
         os.makedirs(dumps_dir)
 
     evol.setNSteps(nsteps)
