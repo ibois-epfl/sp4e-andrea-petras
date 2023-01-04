@@ -1,6 +1,8 @@
 #!/bin/env python3
 
 import os
+import sys
+import argparse
 import numpy as np
 
 
@@ -74,9 +76,35 @@ def computeError(positions : np.ndarray,
     return error
 
 
-def main() -> None:
-    positions = readPositions()
+def main(planet_name : str,
+         directory : str,
+         directory_ref : str) -> None:
+    positions = readPositions(planet_name, directory)
+    positions_ref = readPositions(planet_name, directory_ref)
+    error = computeError(positions, positions_ref)
+    print(f"The error between the computed positions and the reference positions is {error}.")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Compute error simulation')
+    parser.add_argument('planet_name', type=str, default="mercury",
+                        help='specify the planet name')
+    parser.add_argument('directory', type=str, default="trajectories",
+                        help='specify the directory where the file is located')
+    parser.add_argument('directory_ref', type=str, default="build/dumps",
+                        help='specify the directory where the reference file is located')
+    
+    args = parser.parse_args()
+    _planet_name = args.planet_name
+    _directory = args.directory
+    _directory_ref = args.directory_ref
+
+    if not os.path.exists(_directory):
+        raise ValueError(f"The directory {_directory} does not exist.")
+    if not os.path.exists(_directory_ref):
+        print("Run first the main.py file to generate the directory build/dumps.")
+        raise ValueError(f"The directory {_directory_ref} does not exist.")
+
+    main(planet_name=_planet_name,
+         directory=_directory,
+         directory_ref=_directory_ref)

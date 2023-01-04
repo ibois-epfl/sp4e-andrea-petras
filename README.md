@@ -30,3 +30,8 @@ The memory for these object's bindings is done via `shared pointers` this ensure
 ---
 ### Second part: Particle trajectory optimization
 #### Exercise 5: Compute the error of the simulation
+To run the code:
+```bash
+cd homework4/starting_point
+python compute_error_simulation.py "mercury" "trajectories" "build/dumps"
+```
