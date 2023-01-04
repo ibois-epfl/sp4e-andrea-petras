@@ -58,12 +58,13 @@ def main(nsteps, freq, filename, particle_type, timestep):
                 compute_temp.capacity = 1
                 compute_temp.density = 1
                 compute_temp.deltat = 1
+                print(self.system_evolution)
                 self.system_evolution.addCompute(compute_temp)
             except Exception as e:
                 help(compute_temp)
                 raise e
 
-    # evol = factory.createSimulation(filename, timestep, createComputes)
+    evol = factory.createSimulation(filename, timestep, createComputes)
 
     # dumper = CsvWriter("out.csv")
     # dumper.write(evol.getSystem())

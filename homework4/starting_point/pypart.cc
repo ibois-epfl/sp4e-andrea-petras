@@ -9,6 +9,7 @@ namespace py = pybind11;
 #include "ping_pong_balls_factory.hh"
 #include "planets_factory.hh"
 
+#include "system.hh"
 #include "system_evolution.hh"
 #include "compute.hh"
 #include "compute_temperature.hh"
@@ -24,41 +25,47 @@ from pypart import ComputeGravity
 from pypart import ComputeVerletIntegration
 */
 
-
 PYBIND11_MODULE(pypart, m) {
 
   m.doc() = "pybind of the Particles project";
 
-  // main objects
+  /* -------------------------------------------------------------------------- */
+  // main objects + simulation methods
+  /* -------------------------------------------------------------------------- */
+
   py::class_<ParticlesFactoryInterface>(
-      m, "ParticlesFactoryInterface",
-      py::dynamic_attr()
+      m, "ParticlesFactoryInterface"
       )
-      .def("getInstance", &ParticlesFactoryInterface::getInstance, py::return_value_policy::reference);
+      .def_static("getInstance", &ParticlesFactoryInterface::getInstance, py::return_value_policy::reference)
+      .def("createSimulation", [](ParticlesFactoryInterface& self, const std::string& fname, Real timestep)
+          -> SystemEvolution& {return self.createSimulation(fname, timestep);},
+          py::arg("fname"), py::arg("timestep"), py::return_value_policy::reference)
+      .def("createSimulation", py::overload_cast<const std::string&, Real, py::function>(&ParticlesFactoryInterface::createSimulation<py::function>),
+          py::arg("fname"), py::arg("timestep"), py::arg("create_computes"), py::return_value_policy::reference)
+      .def_property_readonly("system_evolution", &ParticlesFactoryInterface::getSystemEvolution, py::return_value_policy::reference);
 
   py::class_<MaterialPointsFactory, ParticlesFactoryInterface>(
-      m, "MaterialPointsFactory",
-      py::dynamic_attr()
+      m, "MaterialPointsFactory"
       )
-      .def("getInstance", &MaterialPointsFactory::getInstance, py::return_value_policy::reference);
+      .def_static("getInstance", &MaterialPointsFactory::getInstance, py::return_value_policy::reference);
 
   py::class_<PingPongBallsFactory, ParticlesFactoryInterface>(
-      m, "PingPongBallsFactory",
-      py::dynamic_attr()
+      m, "PingPongBallsFactory"
       )
-      .def("getInstance", &PingPongBallsFactory::getInstance, py::return_value_policy::reference);
+      .def_static("getInstance", &PingPongBallsFactory::getInstance, py::return_value_policy::reference);
   
   py::class_<PlanetsFactory, ParticlesFactoryInterface>(
-      m, "PlanetsFactory",
-      py::dynamic_attr()
+      m, "PlanetsFactory"
       )
-      .def("getInstance", &PlanetsFactory::getInstance, py::return_value_policy::reference);
+      .def_static("getInstance", &PlanetsFactory::getInstance, py::return_value_policy::reference);
 
 
+  /* -------------------------------------------------------------------------- */
   // compute objects/methods
+  /* -------------------------------------------------------------------------- */
+
   py::class_<SystemEvolution>(
-      m, "SystemEvolution",
-      py::dynamic_attr()
+      m, "SystemEvolution"
       )
       .def("addCompute", &SystemEvolution::addCompute, py::arg("compute"));
 
@@ -84,16 +91,16 @@ PYBIND11_MODULE(pypart, m) {
       .def_property("deltat", &ComputeTemperature::getDeltat, 
           [](ComputeTemperature& self, Real value) { self.getDeltat() = value; });
   
-  py::class_<ComputeGravity, Compute, std::shared_ptr<ComputeGravity>>(
-      m, "ComputeGravity",
-      py::dynamic_attr()
+    py::class_<ComputeInteraction, Compute, std::shared_ptr<ComputeInteraction>>(m, "ComputeInteraction");
+  
+  py::class_<ComputeGravity, ComputeInteraction, std::shared_ptr<ComputeGravity>>(
+      m, "ComputeGravity"
       )
       .def(py::init<>())
-      .def("setG", &ComputeGravity::setG);
+      .def("setG", &ComputeGravity::setG, py::arg("G"));
 
   py::class_<ComputeVerletIntegration, Compute, std::shared_ptr<ComputeVerletIntegration>>(
-      m, "ComputeVerletIntegration",
-      py::dynamic_attr()
+      m, "ComputeVerletIntegration"
       )
       .def(py::init<Real>())
       .def("addInteraction", &ComputeVerletIntegration::addInteraction);

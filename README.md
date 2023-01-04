@@ -1,4 +1,24 @@
 # Homework4
 
+# To consume the code
+> Be sure to clone the submodules with the repository.
+```bash
+cd homework4/starting_point
+cmake -S . -B build && cmake --build build && python build/main.py 1 1 "init.csv" "material_point" 10
+```
+
 ## First part - Pybind: Python bindings for Particles Code
 ### Exercice 1: Factory interface
+**1.2 In class ParticlesFactory, createSimulation function has been overloaded to take functor as one
+of its argument. Comment on what this function is doing? **
+The overloading allows to specify extra info for which type of compute class and values are used in the creation of the evolution system. The basic function presents already a call of default instance of compute objects.
+
+we followed the [pybind11 docu for overloading](https://pybind11.readthedocs.io/en/stable/classes.html#overloaded-methods) and we tried to implement this overload wrap for the `createSimulation()`:
+```cpp
+.def("createSimulation", py::overload_cast<const std::string&, Real>(&ParticlesFactoryInterface::createSimulation),
+          py::arg("fname"), py::arg("timestep"), py::return_value_policy::reference)
+.def("createSimulation", py::overload_cast<const std::string&, Real, py::function>(&ParticlesFactoryInterface::createSimulation<py::function>),
+          py::arg("fname"), py::arg("timestep"), py::arg("create_computes"), py::return_value_policy::reference);
+```
+But we recived the error that it was an `unspecified overload the first one`, finally we decided to declare it as a simple function against the pybind11 documentation. *Why this did not work?*
+
