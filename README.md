@@ -4,7 +4,7 @@
 > Be sure to clone the submodules with the repository.
 ```bash
 cd homework4/starting_point
-cmake -S . -B build && cmake --build build && python build/main.py 1 1 "init.csv" "material_point" 10
+cmake -S . -B build && cmake --build build && python build/main.py 365 1 "init.csv" "planet" 1
 ```
 
 ## First part - Pybind: Python bindings for Particles Code
@@ -29,3 +29,4 @@ The memory for these object's bindings is done via `shared pointers` this ensure
 
 ---
 ### Second part: Particle trajectory optimization
+#### Exercise 5: Compute the error of the simulation
