@@ -37,5 +37,17 @@ python compute_error_simulation.py "mercury" "trajectories" "build/dumps"
 ```
 
 ### Exercise 6: Launching the particle code from python by generating the input
+To run the code:
+```bash
+cd homework4/starting_point
+python generate_input_launcher.py 2 "mercury" "init.csv" "dumps" "build/dumps" "outVelocity.csv"
+```
+with args as (in order):
+`scale` : the scaling factor
+`planet_name` : the name of the planet to analyse
+`input_filename` : the starting input filename to modify the velocity
+`directory` : the generated dumps from this script
+`directory_dir` : the previously generated dumps from the vanilla launcher
+`output_filename` : the single output with modified data for veloctiy
 
-python generate_input_launcher.py 2 "mercury" "init.csv" "outVelocity.csv"
+* Generated results can be found in the directory: `homework/starting_point/dumps`.
