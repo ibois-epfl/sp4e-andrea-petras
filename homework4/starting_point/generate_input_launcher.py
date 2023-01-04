@@ -3,6 +3,9 @@
 import os
 import sys
 import argparse
+# import the main in the build directory
+sys.path.append(os.path.join(os.path.dirname(__file__), "build"))
+import main as m
 
 def generateInput(scale : float,
                   planet_name : str,
@@ -50,6 +53,24 @@ def generateInput(scale : float,
     with open(output_filename, "w") as f:
         f.writelines(lines)
 
+def launchParticles(input,
+                    nb_steps : int,
+                    freq : int) -> None:
+    """
+        Function that launches the particle code on an provided input file.
+
+        Parameters
+        ----------
+        input : str
+            Name of the input file.
+        nb_steps : int
+            Number of steps.
+        freq : int
+            Frequency of the output.
+    """
+    # launch the particle code from main.py
+    m.main(nb_steps, freq, input, "planet", 1)
+
 
 def main(scale : float,
          planet_name : str,
@@ -57,7 +78,7 @@ def main(scale : float,
          output_filename : str) -> None:
 
     generateInput(scale, planet_name, input_filename, output_filename)
-    
+    launchParticles(output_filename, 365, 1)
 
 
 if __name__ == "__main__":

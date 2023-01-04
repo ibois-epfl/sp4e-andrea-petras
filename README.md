@@ -28,10 +28,14 @@ bindings?**
 The memory for these object's bindings is done via `shared pointers` this ensures that once both the C++ and Python memory management counters reach 0, the memory garbage collector takes care of it. As a general rule, this is how every object with no particular instantiation rules should be wrapped.
 
 ---
-### Second part: Particle trajectory optimization
-#### Exercise 5: Compute the error of the simulation
+## Second part: Particle trajectory optimization
+### Exercise 5: Compute the error of the simulation
 To run the code:
 ```bash
 cd homework4/starting_point
 python compute_error_simulation.py "mercury" "trajectories" "build/dumps"
 ```
+
+### Exercise 6: Launching the particle code from python by generating the input
+
+python generate_input_launcher.py 2 "mercury" "init.csv" "outVelocity.csv"
