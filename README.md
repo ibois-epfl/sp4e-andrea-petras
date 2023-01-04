@@ -8,8 +8,8 @@ cmake -S . -B build && cmake --build build && python build/main.py 1 1 "init.csv
 ```
 
 ## First part - Pybind: Python bindings for Particles Code
-### Exercice 1: Factory interface
-**1.2 In class ParticlesFactory, createSimulation function has been overloaded to take functor as one
+### Exercise 1: Factory interface
+** ❓ 1.2 In class ParticlesFactory, createSimulation function has been overloaded to take functor as one
 of its argument. Comment on what this function is doing? **
 The overloading allows to specify extra info for which type of compute class and values are used in the creation of the evolution system. The basic function presents already a call of default instance of compute objects.
 
@@ -22,3 +22,7 @@ we followed the [pybind11 docu for overloading](https://pybind11.readthedocs.io/
 ```
 But we recived the error that it was an `unspecified overload the first one`, finally we decided to declare it as a simple function against the pybind11 documentation. *Why this did not work?*
 
+### Exercise 2: Compute
+** ❓ 2.2 How will you ensure that references to Compute objects type are correctly managed in the python
+bindings?**
+The memory for these object's bindings is done via `shared pointers` this ensures that once both the C++ and Python memory management counters reach 0, the memory garbage collector takes care of it. As a general rule, this is how every object with no particular instantiation rules should be wrapped.
