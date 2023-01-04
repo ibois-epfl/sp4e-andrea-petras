@@ -71,8 +71,10 @@ PYBIND11_MODULE(pypart, m) {
       m, "SystemEvolution"
       )
       .def("addCompute", &SystemEvolution::addCompute, py::arg("compute"))
-      .def("getSystem", &SystemEvolution::getSystem);
-      // .def_property_readonly("getSystem", &SystemEvolution::getSystem, py::return_value_policy::reference);
+      .def("getSystem", &SystemEvolution::getSystem)
+      .def("setNSteps", &SystemEvolution::setNSteps, py::arg("nsteps"))
+      .def("setDumpFreq", &SystemEvolution::setDumpFreq, py::arg("dump_freq"))
+      .def("evolve", &SystemEvolution::evolve);
 
   py::class_<Compute, std::shared_ptr<Compute>>(m, "Compute");
 

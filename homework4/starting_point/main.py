@@ -1,5 +1,6 @@
 #!/bin/env python3
 
+import os
 import sys
 import argparse
 from pypart import MaterialPointsFactory, ParticlesFactoryInterface
@@ -69,9 +70,15 @@ def main(nsteps, freq, filename, particle_type, timestep):
     dumper = CsvWriter("out.csv")
     dumper.write(evol.getSystem())
 
-    # evol.setNSteps(nsteps)
-    # evol.setDumpFreq(freq)
-    # evol.evolve()
+    # create a dumps folder in build dir if it does not exit
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    dumps_dir = os.path.join(current_dir, "dumps")
+    if not os.path.exists(dumps_dir):
+        os.makedirs(dumps_dir)
+
+    evol.setNSteps(nsteps)
+    evol.setDumpFreq(freq)
+    evol.evolve()
 
 
 if __name__ == "__main__":
