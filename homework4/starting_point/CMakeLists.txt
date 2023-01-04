@@ -96,7 +96,7 @@ endif(DOXYGEN_FOUND)
 # Pybind
 ################################################################
 
-option (USE_PYTHON "Use pybind library" OFF) 
+option (USE_PYTHON "Use pybind library" ON) 
 
 if (USE_PYTHON)
 add_subdirectory(pybind11)
@@ -110,6 +110,11 @@ set_target_properties(pypart PROPERTIES
 
 file(
   COPY ${CMAKE_CURRENT_SOURCE_DIR}/main.py
+  DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/
+  )
+# copy also the file init csv
+file(
+  COPY ${CMAKE_CURRENT_SOURCE_DIR}/init.csv
   DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/
   )
 
