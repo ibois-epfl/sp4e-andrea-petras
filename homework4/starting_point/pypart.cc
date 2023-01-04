@@ -16,18 +16,21 @@ namespace py = pybind11;
 #include "compute_gravity.hh"
 #include "compute_verlet_integration.hh"
 
-/*
-from pypart import MaterialPointsFactory, ParticlesFactoryInterface
-from pypart import PingPongBallsFactory, PlanetsFactory
-from pypart import CsvWriter
-from pypart import ComputeTemperature
-from pypart import ComputeGravity
-from pypart import ComputeVerletIntegration
-*/
+#include "csv_writer.hh"
+
 
 PYBIND11_MODULE(pypart, m) {
 
   m.doc() = "pybind of the Particles project";
+
+  /* -------------------------------------------------------------------------- */
+  // system
+  /* -------------------------------------------------------------------------- */
+
+  py::class_<System>(
+      m, "System")
+      .def(py::init());
+
 
   /* -------------------------------------------------------------------------- */
   // main objects + simulation methods
@@ -67,7 +70,9 @@ PYBIND11_MODULE(pypart, m) {
   py::class_<SystemEvolution>(
       m, "SystemEvolution"
       )
-      .def("addCompute", &SystemEvolution::addCompute, py::arg("compute"));
+      .def("addCompute", &SystemEvolution::addCompute, py::arg("compute"))
+      .def("getSystem", &SystemEvolution::getSystem);
+      // .def_property_readonly("getSystem", &SystemEvolution::getSystem, py::return_value_policy::reference);
 
   py::class_<Compute, std::shared_ptr<Compute>>(m, "Compute");
 
@@ -105,5 +110,15 @@ PYBIND11_MODULE(pypart, m) {
       .def(py::init<Real>())
       .def("addInteraction", &ComputeVerletIntegration::addInteraction);
 
+
+  /* -------------------------------------------------------------------------- */
+  // csv writer
+  /* -------------------------------------------------------------------------- */
+
+  py::class_<CsvWriter>(
+      m, "CsvWriter"
+      )
+      .def(py::init<const std::string&>())
+      .def("write", &CsvWriter::write);
 
 }

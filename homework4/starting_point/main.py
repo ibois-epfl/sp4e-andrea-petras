@@ -4,7 +4,7 @@ import sys
 import argparse
 from pypart import MaterialPointsFactory, ParticlesFactoryInterface
 from pypart import PingPongBallsFactory, PlanetsFactory
-# from pypart import CsvWriter
+from pypart import CsvWriter
 from pypart import ComputeTemperature
 from pypart import ComputeGravity
 from pypart import ComputeVerletIntegration
@@ -66,8 +66,8 @@ def main(nsteps, freq, filename, particle_type, timestep):
 
     evol = factory.createSimulation(filename, timestep, createComputes)
 
-    # dumper = CsvWriter("out.csv")
-    # dumper.write(evol.getSystem())
+    dumper = CsvWriter("out.csv")
+    dumper.write(evol.getSystem())
 
     # evol.setNSteps(nsteps)
     # evol.setDumpFreq(freq)
