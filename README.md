@@ -36,6 +36,7 @@ cd homework4/starting_point
 python compute_error_simulation.py "mercury" "trajectories" "build/dumps"
 ```
 
+---
 ### Exercise 6: Launching the particle code from python by generating the input
 To run the code:
 ```bash
@@ -51,3 +52,7 @@ with args as (in order):
 `output_filename` : the single output with modified data for veloctiy
 
 * Generated results can be found in the directory: `homework/starting_point/dumps`.
+
+---
+### Exercice 7: Optimization
+We did not menage to terminate the part 7 for the optimization in time. The optimization code is present but not working.

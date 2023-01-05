@@ -3,12 +3,73 @@
 import os
 import sys
 import argparse
-# import the main in the build directory
 sys.path.append(os.path.join(os.path.dirname(__file__), "build"))
 import main as m
-
+from scipy.optimize import fmin
+import numpy as np
 # import error functions
 from compute_error_simulation import readPositions, computeError
+
+
+# def runOptimize(scale : float,
+#                 planet_name : str,
+#                 input_filename : str,
+#                 output_filename : str,
+#                 directory : str,
+#                 directory_ref : str,
+#                 steps : int = 365,
+#                 freq : int = 1) -> float:
+#     """
+#         Function that runs the optimization with the scipy.optimize.fmin
+
+#         Parameters
+#         ----------
+#         scale : float
+#             Scaling factor.
+#         planet_name : str
+#             Name of the planet.
+#         input : str
+#             Name of the input file.
+#         directory : str
+#             Directory where the output files are located.
+#         directory_ref : str
+#             Directory where the reference files are located.
+#         steps : int
+#             Number of steps.
+#         freq : int
+#             Frequency of the output.
+#     """
+#     # Arrange input as an array
+#     scale_np = np.array(scale)
+#     # intermediate = lambda x: run(x, planet_name, input, directory, directory_ref, steps, freq)
+#     scale_intermediate = [scale_np]
+#     error_list = [runAndComputeError(scale,
+#                                planet_name,
+#                                input_filename,
+#                                output_filename,
+#                                directory,
+#                                directory_ref,
+#                                365,
+#                                1)]
+    
+#     print(error_list)
+
+#     res = fmin(runAndComputeError,
+#                x0=scale_intermediate,
+#                args=(planet_name, input_filename, output_filename, directory, directory_ref, 365, 1),
+#                xtol=1e-8,
+#                ftol=1e-8,
+#                disp=False,
+#                retall=False)
+
+#     # plot the iteration results
+#     import matplotlib.pyplot as plt
+
+#     plt.plot(scale_intermediate, error)
+#     plt.xlabel("Scale")
+#     plt.ylabel("Error")
+#     plt.show()
+
 
 def runAndComputeError(scale : float,
                        planet_name : str,
@@ -125,9 +186,7 @@ def main(scale : float,
          directory_ref : str,
          output_filename : str) -> None:
 
-    generateInput(scale, planet_name, input_filename, output_filename)
-    launchParticles(output_filename, 365, 1)
-
+    # compute error
     error = runAndComputeError(scale,
                                planet_name,
                                input_filename,
@@ -137,6 +196,16 @@ def main(scale : float,
                                365,
                                1)
     print("Error: {}".format(error))
+
+    # # optimize it
+    # runOptimize(error,
+    #             planet_name,
+    #             input_filename,
+    #             output_filename,
+    #             directory,
+    #             directory_ref,
+    #             365,
+    #             1)
 
 
 if __name__ == "__main__":
